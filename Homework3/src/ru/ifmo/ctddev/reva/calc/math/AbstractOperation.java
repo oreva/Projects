@@ -10,6 +10,7 @@ import ru.ifmo.ctddev.reva.calc.exceptions.MathOperationException;
  * Time: 7:15 PM
  * To change this template use File | Settings | File Templates.
  */
+//test change
 public abstract class AbstractOperation implements IExpression {
 	public OperationPriority priority;
 
