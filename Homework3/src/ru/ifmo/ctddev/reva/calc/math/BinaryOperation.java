@@ -35,10 +35,6 @@ public abstract class BinaryOperation extends AbstractOperation {
 			throw ev;
 		}
 		return intResult;
-		/*if (result > Integer.MAX_VALUE || result < Integer.MIN_VALUE) {
-			throw new EvaluationException("overflow");
-		}
-		return Integer.parseInt(result.toString());     */
 	}
 
 	protected abstract long operate(long value1, long value2) throws EvaluationException;

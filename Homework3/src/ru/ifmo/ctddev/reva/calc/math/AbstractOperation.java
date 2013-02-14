@@ -1,10 +1,9 @@
 package ru.ifmo.ctddev.reva.calc.math;
 
-import ru.ifmo.ctddev.reva.calc.exceptions.EvaluationException;
 import ru.ifmo.ctddev.reva.calc.exceptions.MathOperationException;
 
 /**
- * Created with IntelliJ IDEA.
+ * Created with IntelliJ IDEA.  dgfdgdgdf
  * User: Olga Reva
  * Date: 2/7/13
  * Time: 7:15 PM
