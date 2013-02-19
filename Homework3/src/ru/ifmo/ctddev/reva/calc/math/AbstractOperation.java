@@ -9,7 +9,10 @@ package ru.ifmo.ctddev.reva.calc.math;
  * To change this template use File | Settings | File Templates.
  */
 public abstract class AbstractOperation implements IExpression {
-	public OperationPriority priority;
+	protected OperationPriority priority;
+	public OperationPriority priority() {
+		return this.priority;
+	}
 
 	public abstract boolean canAddInnerOperation();
 	public abstract void addInnerOperation(AbstractOperation op);
