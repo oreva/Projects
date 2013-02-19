@@ -19,22 +19,22 @@ public class Const extends AbstractOperation {
 	}
 
 	@Override
-	public void addInnerOperation(AbstractOperation op) throws MathOperationException {
+	public void addInnerOperation(AbstractOperation op) {
 		throw new MathOperationException("Const cannot have inner operations");
 	}
 
 	@Override
-	public void removeLastInnerOperation() throws MathOperationException {
+	public void removeLastInnerOperation() {
 		throw new MathOperationException("Const cannot have inner operations");
 	}
 
 	@Override
-	public AbstractOperation getInnerOperation(int operationIndex) throws MathOperationException {
+	public AbstractOperation getInnerOperation(int operationIndex) {
 		throw new MathOperationException("Const cannot have inner operations");
 	}
 
 	@Override
-	public AbstractOperation getLastInnerOperation() throws MathOperationException {
+	public AbstractOperation getLastInnerOperation() {
 		throw new MathOperationException("Const cannot have inner operations");
 	}
 }

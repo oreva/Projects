@@ -34,7 +34,7 @@ public class Brackets extends AbstractOperation {
 	}
 
 	@Override
-	public void addInnerOperation(AbstractOperation op) throws MathOperationException {
+	public void addInnerOperation(AbstractOperation op) {
 		if (canAddInnerOperation()) {
 			setInnerOperation(op);
 		} else {
@@ -43,12 +43,12 @@ public class Brackets extends AbstractOperation {
 	}
 
 	@Override
-	public void removeLastInnerOperation() throws MathOperationException {
+	public void removeLastInnerOperation() {
 		setInnerOperation(null);
 	}
 
 	@Override
-	public AbstractOperation getInnerOperation(int operationIndex) throws MathOperationException {
+	public AbstractOperation getInnerOperation(int operationIndex) {
 		if (operationIndex == 0) {
 			return innerOperation;
 		} else {
@@ -57,7 +57,7 @@ public class Brackets extends AbstractOperation {
 	}
 
 	@Override
-	public AbstractOperation getLastInnerOperation() throws MathOperationException {
+	public AbstractOperation getLastInnerOperation() {
 		return getInnerOperation(0);
 	}
 

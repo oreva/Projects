@@ -45,7 +45,7 @@ public abstract class BinaryOperation extends AbstractOperation {
 	}
 
 	@Override
-	public void addInnerOperation(AbstractOperation op) throws MathOperationException {
+	public void addInnerOperation(AbstractOperation op) {
 		if (!canAddInnerOperation()) {
 			throw new MathOperationException("BinaryOperation cannot have more than two operands");
 		}
@@ -53,14 +53,14 @@ public abstract class BinaryOperation extends AbstractOperation {
 	}
 
 	@Override
-	public void removeLastInnerOperation() throws MathOperationException {
+	public void removeLastInnerOperation() {
 		if (operands.size() > 0) {
 			operands.remove(operands.size() - 1);
 		}
 	}
 
 	@Override
-	public AbstractOperation getInnerOperation(int operationIndex) throws MathOperationException {
+	public AbstractOperation getInnerOperation(int operationIndex) {
 		if (operationIndex < 0 || operationIndex >= NUM_OF_OPERANDS) {
 			throw new MathOperationException("Illegal operation index " + String.valueOf(operationIndex) + "for BinaryOperation");
 		}
@@ -68,7 +68,7 @@ public abstract class BinaryOperation extends AbstractOperation {
 	}
 
 	@Override
-	public AbstractOperation getLastInnerOperation() throws MathOperationException {
+	public AbstractOperation getLastInnerOperation() {
 		return getInnerOperation(operands.size() - 1);
 	}
 }

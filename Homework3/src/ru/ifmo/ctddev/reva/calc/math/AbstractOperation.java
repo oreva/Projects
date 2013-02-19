@@ -1,6 +1,5 @@
 package ru.ifmo.ctddev.reva.calc.math;
 
-import ru.ifmo.ctddev.reva.calc.exceptions.MathOperationException;
 
 /**
  * Created with IntelliJ IDEA.  dgfdgdgdf
@@ -13,8 +12,8 @@ public abstract class AbstractOperation implements IExpression {
 	public OperationPriority priority;
 
 	public abstract boolean canAddInnerOperation();
-	public abstract void addInnerOperation(AbstractOperation op) throws MathOperationException;
-	public abstract void removeLastInnerOperation() throws MathOperationException;
-	public abstract AbstractOperation getInnerOperation(int operationIndex) throws MathOperationException;
-	public abstract AbstractOperation getLastInnerOperation() throws MathOperationException;
+	public abstract void addInnerOperation(AbstractOperation op);
+	public abstract void removeLastInnerOperation();
+	public abstract AbstractOperation getInnerOperation(int operationIndex);
+	public abstract AbstractOperation getLastInnerOperation();
 }

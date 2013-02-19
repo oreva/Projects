@@ -15,7 +15,7 @@ import ru.ifmo.ctddev.reva.calc.math.Brackets;
 public class Calc {
 	public static void main(String[] args) {
 		try {
-			Brackets f = new Brackets("x", /*args[0]*/"23+3");
+			Brackets f = new Brackets("x", args[0]);
 			calculate(f, 0, 10);
 		} catch (IncorrectFuncBodyException e) {
 			e.printStackTrace();
