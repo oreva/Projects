@@ -3,7 +3,7 @@ package ru.ifmo.ctddev.reva.calc;
 import ru.ifmo.ctddev.reva.calc.exceptions.EvaluationException;
 import ru.ifmo.ctddev.reva.calc.exceptions.IncorrectFuncBodyException;
 import ru.ifmo.ctddev.reva.calc.math.AbstractOperation;
-import ru.ifmo.ctddev.reva.calc.math.Brackets;
+import ru.ifmo.ctddev.reva.calc.parsing.FunctionParser;
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,7 +15,7 @@ import ru.ifmo.ctddev.reva.calc.math.Brackets;
 public class Calc {
 	public static void main(String[] args) {
 		try {
-			Brackets f = new Brackets("x", args[0]);
+			AbstractOperation f = FunctionParser.parseFunction(args[0], "x");
 			calculate(f, 0, 10);
 		} catch (IncorrectFuncBodyException e) {
 			e.printStackTrace();

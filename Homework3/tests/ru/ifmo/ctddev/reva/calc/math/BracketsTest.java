@@ -1,5 +1,6 @@
+package ru.ifmo.ctddev.reva.calc.math;
+
 import org.junit.Test;
-import ru.ifmo.ctddev.reva.calc.math.Brackets;
 
 import static org.junit.Assert.assertTrue;
 
@@ -13,6 +14,6 @@ import static org.junit.Assert.assertTrue;
 public class BracketsTest {
 	@Test
 	public void testEvaluate() throws Exception {
-		assertTrue(new Brackets("x", "x*(2+2)").evaluate(2) == 8);
+		assertTrue(new Brackets(new Plus(new Const(1), new Variable("x"))).evaluate(2) == 3);
 	}
 }

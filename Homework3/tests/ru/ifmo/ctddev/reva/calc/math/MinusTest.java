@@ -1,8 +1,6 @@
+package ru.ifmo.ctddev.reva.calc.math;
 
 import org.junit.Test;
-import ru.ifmo.ctddev.reva.calc.math.Const;
-import ru.ifmo.ctddev.reva.calc.math.Minus;
-import ru.ifmo.ctddev.reva.calc.math.Variable;
 
 import static org.junit.Assert.assertTrue;
 
