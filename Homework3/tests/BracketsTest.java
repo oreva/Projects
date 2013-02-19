@@ -1,5 +1,3 @@
-package ru.ifmo.ctddev.reva.calc.tests;
-
 import org.junit.Test;
 import ru.ifmo.ctddev.reva.calc.math.Brackets;
 
