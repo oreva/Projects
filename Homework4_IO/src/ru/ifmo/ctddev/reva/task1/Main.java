@@ -2,9 +2,7 @@ package ru.ifmo.ctddev.reva.task1;
 
 import ru.ifmo.ctddev.reva.task1.matrix.Matrix;
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,19 +14,19 @@ import java.io.IOException;
 public class Main {
 	public static void main(String[] args) {
 		try {
-			//FileReader f = new FileReader(args[0]);
-			//FileReader g = new FileReader(args[1]);
-			FileReader f = new FileReader("d:/Education/JavaAcademy/Projects/Homework4_IO/input.txt");
-			FileWriter g = new FileWriter("d:/Education/JavaAcademy/Projects/Homework4_IO/output.txt");
+			BufferedReader f = new BufferedReader(new FileReader(args[0]));
+			BufferedWriter g = new BufferedWriter(new FileWriter(args[1]));
+			/*BufferedReader f = new BufferedReader(new FileReader("d:/Education/JavaAcademy/Projects/Homework4_IO/input.txt"));
+			BufferedWriter g = new BufferedWriter(new FileWriter("d:/Education/JavaAcademy/Projects/Homework4_IO/output.txt"));
+            */
 
-			Matrix m = new Matrix(f);
-			Matrix result = m.multiply(m);
+			Matrix m1 = new Matrix(f);
+			Matrix m2 = new Matrix(f);
+			Matrix result = m1.multiply(m2);
 			result.write(g);
-		} catch (IOException e) {
-			e.printStackTrace();
+			f.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 	}
 }

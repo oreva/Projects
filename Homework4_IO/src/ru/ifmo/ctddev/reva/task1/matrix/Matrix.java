@@ -19,8 +19,11 @@ public class Matrix {
 	private int numColumns;
 	private double[][] content;
 
-	public Matrix(FileReader f) throws MatrixIncorrectFormatException, IOException {
-		read(f);
+	public Matrix(BufferedReader f) throws MatrixIncorrectFormatException {
+		Matrix source = MatrixReader.read(f);
+		numRows = source.numRows();
+		numColumns = source.numColumns();
+		content = source.content();
 	}
 
 	public Matrix(int rowCount, int columnCount, double[][] content) throws MatrixIncorrectFormatException {
@@ -102,8 +105,7 @@ public class Matrix {
 		return new Matrix(numRows, numColumns, c);
 	}
 
-	public void write(FileWriter f) throws IOException {
-		BufferedWriter bf = new BufferedWriter(f);
+	public void write(BufferedWriter bf) throws IOException {
 		String delimiter = " ";
 
 		bf.write(String.valueOf(numRows));
@@ -119,30 +121,6 @@ public class Matrix {
 			bf.newLine();
 		}
 		bf.close();
-	}
-
-	private void read(FileReader f) throws MatrixIncorrectFormatException, IOException {
-		Scanner scanner = new Scanner(f);
-		scanner.useDelimiter("\\s+");
-		try {
-			numRows = scanner.nextInt();
-			numColumns = scanner.nextInt();
-			double[][] contentMatrix = new double[numRows][numColumns];
-			for (int i = 0; i < numRows; i++) {
-				for (int j = 0; j < numColumns; j++) {
-					if (scanner.hasNextDouble()) {
-						contentMatrix[i][j] = scanner.nextDouble();
-					} else {
-						throw new MatrixIncorrectFormatException("Incorrect matrix format in the file");
-					}
-				}
-			}
-			content = contentMatrix;
-		} catch (Exception e) {
-			throw new MatrixIncorrectFormatException("Incorrect matrix format in the file", e);
-		} finally {
-			scanner.close();
-		}
 	}
 
 	public double[][] content() {
