@@ -4,7 +4,6 @@ import ru.ifmo.ctddev.reva.task1.matrix.exceptions.MatrixIncorrectFormatExceptio
 import ru.ifmo.ctddev.reva.task1.matrix.exceptions.MatrixOperationException;
 
 import java.io.*;
-import java.util.Scanner;
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,12 +13,11 @@ import java.util.Scanner;
  * To change this template use File | Settings | File Templates.
  */
 public class Matrix {
-	//private Dimension dim;
 	private int numRows;
 	private int numColumns;
 	private double[][] content;
 
-	public Matrix(BufferedReader f) throws MatrixIncorrectFormatException {
+	public Matrix(BufferedReader f) throws MatrixIncorrectFormatException, IOException {
 		Matrix source = MatrixReader.read(f);
 		numRows = source.numRows();
 		numColumns = source.numColumns();
@@ -106,21 +104,7 @@ public class Matrix {
 	}
 
 	public void write(BufferedWriter bf) throws IOException {
-		String delimiter = " ";
-
-		bf.write(String.valueOf(numRows));
-		bf.write(delimiter);
-		bf.write(String.valueOf(numColumns));
-		bf.newLine();
-
-		for (int i = 0; i < numRows; i++) {
-			for (int j = 0; j < numColumns; j++) {
-				bf.write(String.valueOf(content[i][j]));
-				bf.write(delimiter);
-			}
-			bf.newLine();
-		}
-		bf.close();
+		MatrixWriter.write(bf, this);
 	}
 
 	public double[][] content() {

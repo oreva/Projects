@@ -13,20 +13,25 @@ import java.io.*;
  */
 public class Main {
 	public static void main(String[] args) {
+		BufferedReader f = null;
+		BufferedWriter g = null;
 		try {
-			BufferedReader f = new BufferedReader(new FileReader(args[0]));
-			BufferedWriter g = new BufferedWriter(new FileWriter(args[1]));
-			/*BufferedReader f = new BufferedReader(new FileReader("d:/Education/JavaAcademy/Projects/Homework4_IO/input.txt"));
-			BufferedWriter g = new BufferedWriter(new FileWriter("d:/Education/JavaAcademy/Projects/Homework4_IO/output.txt"));
-            */
+			f = new BufferedReader(new FileReader(args[0]));
+			g = new BufferedWriter(new FileWriter(args[1]));
 
 			Matrix m1 = new Matrix(f);
 			Matrix m2 = new Matrix(f);
 			Matrix result = m1.multiply(m2);
 			result.write(g);
 			f.close();
+			g.close();
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				f.close();
+				g.close();
+			} catch (IOException fe) {/*Ignoring*/}
 		}
 	}
 }
