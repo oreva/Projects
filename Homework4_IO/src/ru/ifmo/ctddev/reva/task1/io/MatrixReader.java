@@ -1,8 +1,10 @@
-package ru.ifmo.ctddev.reva.task1.matrix;
+package ru.ifmo.ctddev.reva.task1.io;
 
+import ru.ifmo.ctddev.reva.task1.matrix.Matrix;
 import ru.ifmo.ctddev.reva.task1.matrix.exceptions.MatrixIncorrectFormatException;
 
 import java.io.BufferedReader;
+import java.io.Closeable;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -13,8 +15,14 @@ import java.util.Scanner;
  * Time: 12:02 PM
  * To change this template use File | Settings | File Templates.
  */
-public class MatrixReader {
-	public static Matrix read(BufferedReader reader) throws MatrixIncorrectFormatException, IOException {
+public class MatrixReader implements Closeable {
+	private BufferedReader reader;
+
+	public MatrixReader(BufferedReader reader) {
+		this.reader = reader;
+	}
+
+	public Matrix read(/*BufferedReader reader*/) throws MatrixIncorrectFormatException, IOException {
 		int rowCount;
 		int columnCount;
 
@@ -30,7 +38,7 @@ public class MatrixReader {
 		return new Matrix(rowCount, columnCount, contentMatrix);
 	}
 
-	public static MatrixDimension readMatrixDimensions(String str) throws MatrixIncorrectFormatException, IOException {
+	public MatrixDimension readMatrixDimensions(String str) throws MatrixIncorrectFormatException, IOException {
 		Scanner scanner = new Scanner(str);
 		scanner.useDelimiter("\\s+");
 		int rowCount;
@@ -60,7 +68,7 @@ public class MatrixReader {
 		return new MatrixDimension(rowCount, columnCount);
 	}
 
-	private static double[] readMatrixLine(String strLine, int columnCount) throws MatrixIncorrectFormatException, IOException {
+	private double[] readMatrixLine(String strLine, int columnCount) throws MatrixIncorrectFormatException, IOException {
 		Scanner scanner = new Scanner(strLine);
 		scanner.useDelimiter("\\s+");
 		double[] result = new double[columnCount];
@@ -84,6 +92,11 @@ public class MatrixReader {
 			}
 		}
 		return result;
+	}
+
+	@Override
+	public void close() throws IOException {
+		reader.close();
 	}
 
 	private static class MatrixDimension {

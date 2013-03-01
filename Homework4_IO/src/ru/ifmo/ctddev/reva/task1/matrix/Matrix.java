@@ -17,13 +17,6 @@ public class Matrix {
 	private int numColumns;
 	private double[][] content;
 
-	public Matrix(BufferedReader f) throws MatrixIncorrectFormatException, IOException {
-		Matrix source = MatrixReader.read(f);
-		numRows = source.numRows();
-		numColumns = source.numColumns();
-		content = source.content();
-	}
-
 	public Matrix(int rowCount, int columnCount, double[][] content) throws MatrixIncorrectFormatException {
 		numRows = rowCount;
 		numColumns = columnCount;
@@ -101,10 +94,6 @@ public class Matrix {
 			}
 		}
 		return new Matrix(numRows, numColumns, c);
-	}
-
-	public void write(BufferedWriter bf) throws IOException {
-		MatrixWriter.write(bf, this);
 	}
 
 	public double[][] content() {

@@ -1,5 +1,7 @@
 package ru.ifmo.ctddev.reva.task1;
 
+import ru.ifmo.ctddev.reva.task1.io.MatrixReader;
+import ru.ifmo.ctddev.reva.task1.io.MatrixWriter;
 import ru.ifmo.ctddev.reva.task1.matrix.Matrix;
 
 import java.io.*;
@@ -13,24 +15,23 @@ import java.io.*;
  */
 public class Main {
 	public static void main(String[] args) {
-		BufferedReader f = null;
-		BufferedWriter g = null;
+		MatrixReader reader = null;
+		MatrixWriter writer = null;
 		try {
-			f = new BufferedReader(new FileReader(args[0]));
-			g = new BufferedWriter(new FileWriter(args[1]));
+			reader = new MatrixReader(new BufferedReader(new FileReader(args[0])));
+			writer = new MatrixWriter(new BufferedWriter(new FileWriter(args[1])));
 
-			Matrix m1 = new Matrix(f);
-			Matrix m2 = new Matrix(f);
+			Matrix m1 = reader.read();
+			Matrix m2 = reader.read();
 			Matrix result = m1.multiply(m2);
-			result.write(g);
-			f.close();
-			g.close();
+
+			writer.write(result);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			try {
-				f.close();
-				g.close();
+				reader.close();
+				writer.close();
 			} catch (IOException fe) {/*Ignoring*/}
 		}
 	}
