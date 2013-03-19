@@ -24,6 +24,7 @@ public class Bag<E> extends AbstractCollection<E> {
 	private class BagIterator<T> implements Iterator<T> {
 		private Iterator<E> innerMapIterator = innerMap().keySet().iterator();
 		private Iterator<T> innerListIterator = null;
+		private ArrayList<E> currentInnerList = null;
 
 		@Override
 		public boolean hasNext() {
@@ -38,6 +39,10 @@ public class Bag<E> extends AbstractCollection<E> {
 		@Override
 		public void remove() {
 			innerListIterator().remove();
+			if (currentInnerList.isEmpty()) {
+				innerMapIterator().remove();
+				innerListIterator = null;
+			}
 		}
 
 		private Iterator<E> innerMapIterator() {
@@ -47,7 +52,8 @@ public class Bag<E> extends AbstractCollection<E> {
 		@SuppressWarnings("unchecked")
 		private Iterator<T> innerListIterator() {
 			if ((innerListIterator == null || !innerListIterator.hasNext()) && innerMapIterator().hasNext()) {
-				innerListIterator = (Iterator<T>)innerMap().get(innerMapIterator().next()).iterator();
+				currentInnerList = innerMap().get(innerMapIterator().next());
+				innerListIterator = (Iterator<T>)currentInnerList.iterator();
 			}
 			return innerListIterator;
 		}
