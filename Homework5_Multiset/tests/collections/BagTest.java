@@ -1,5 +1,6 @@
 package collections;
 
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -113,5 +114,20 @@ public class BagTest {
 		assertTrue(!bag.isEmpty());
 		bag.clear();
 		assertTrue(bag.isEmpty());
+	}
+
+	@Test
+	public void testBagOrder() {
+		Bag<Integer> bag = new Bag<Integer>();
+		bag.add(2);
+		bag.add(10);
+		bag.add(2);
+		Iterator<Integer> iterator = bag.iterator();
+		int nextInt = iterator.next();
+		assertEquals(2, nextInt);
+		nextInt = iterator.next();
+		assertEquals(2, nextInt);
+		nextInt = iterator.next();
+		assertEquals(10, nextInt);
 	}
 }
