@@ -1,5 +1,6 @@
 package collections;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Iterator;
@@ -15,21 +16,8 @@ import static org.junit.Assert.assertTrue;
  * To change this template use File | Settings | File Templates.
  */
 public class BagTest {
-	/*@org.junit.Test
-	public void testAdd() throws Exception {
-		Bag<Integer> bag = new Bag<Integer>();
-		bag.add(5);
-		bag.remove(5);
-		assertTrue(bag.isEmpty());
-	}
-
-	@org.junit.Test
-	public void testRemove() throws Exception {
-		Bag<Integer> bag = new Bag<Integer>();
-		assertTrue(!bag.remove(5));
-	}   */
-
 	@Test
+	@Ignore
 	public void testMemoryLeak() {
 		Bag<Integer> bag = new Bag<Integer>();
 		assertEquals(0, bag.size());
@@ -58,6 +46,72 @@ public class BagTest {
 		bag.add(2);
 		assertTrue(!bag.isEmpty());
 		bag.remove(2);
+		assertTrue(bag.isEmpty());
+
+		bag.add(5);
+		assertTrue(!bag.isEmpty());
+		assertTrue(bag.add(5));
+		assertTrue(!bag.isEmpty());
+		assertEquals(2, bag.size());
+	}
+
+	@Test
+	public void testIterator() throws Exception {
+		Bag<Integer> bag = new Bag<Integer>();
+		Iterator<Integer> iterator = bag.iterator();
+		assertTrue(!iterator.hasNext());
+
+		bag.add(5);
+		iterator = bag.iterator();
+		assertTrue(iterator.hasNext());
+		assertEquals(5, iterator.next().intValue());
+		iterator.remove();
+		assertTrue(!iterator.hasNext());
+		assertTrue(bag.isEmpty());
+	}
+
+	@Test
+	public void testSize() throws Exception {
+		Bag<Integer> bag = new Bag<Integer>();
+		assertEquals(0, bag.size());
+		bag.add(5);
+		assertEquals(1, bag.size());
+		bag.add(5);
+		assertEquals(2, bag.size());
+		bag.add(5);
+		assertEquals(3, bag.size());
+	}
+
+	@Test
+	public void testRemove() throws Exception {
+		Bag<Integer> bag = new Bag<Integer>();
+		assertTrue(bag.isEmpty());
+		bag.add(5);
+		assertTrue(!bag.isEmpty());
+		bag.add(5);
+		assertTrue(!bag.isEmpty());
+		assertTrue(!bag.remove(0));
+		assertTrue(bag.remove(5));
+		assertTrue(!bag.isEmpty());
+		assertTrue(bag.remove(5));
+		assertTrue(!bag.remove(5));
+	}
+
+	@Test
+	public void testContains() throws Exception {
+		Bag<Integer> bag = new Bag<Integer>();
+		assertTrue(!bag.contains(5));
+		bag.add(5);
+		assertTrue(bag.contains(5));
+	}
+
+	@Test
+	public void testClear() throws Exception {
+		Bag<Integer> bag = new Bag<Integer>();
+		assertTrue(bag.isEmpty());
+		bag.add(5);
+		assertTrue(!bag.isEmpty());
+		bag.clear();
 		assertTrue(bag.isEmpty());
 	}
 }

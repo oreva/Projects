@@ -80,5 +80,26 @@ public class Bag<E> extends AbstractCollection<E> {
 		return innerMap().get(e).add(e);
 	}
 
+	@Override
+	public boolean remove(Object o) {
+		if (innerMap().containsKey(o)) {
+			ArrayList<E> valueList = innerMap().get(o);
+			valueList.remove(0);
+			if (valueList.isEmpty()) {
+				innerMap().remove(o);
+			}
+			return true;
+		}
+		return false;
+	}
 
+	@Override
+	public boolean contains(Object o) {
+		return innerMap().containsKey(o);
+	}
+
+	@Override
+	public void clear() {
+		innerMap().clear();
+	}
 }
