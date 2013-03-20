@@ -7,6 +7,7 @@ import org.junit.Test;
 import java.util.Iterator;
 
 import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -37,22 +38,22 @@ public class BagTest {
 	public void testAdd() throws Exception {
 		Bag<Integer> bag = new Bag<Integer>();
 		bag.add(0);
-		assertTrue(!bag.isEmpty());
+		assertFalse(bag.isEmpty());
 		bag.remove(0);
 		assertTrue(bag.isEmpty());
 		bag.add(1);
-		assertTrue(!bag.isEmpty());
+		assertFalse(bag.isEmpty());
 		bag.remove(1);
 		assertTrue(bag.isEmpty());
 		bag.add(2);
-		assertTrue(!bag.isEmpty());
+		assertFalse(bag.isEmpty());
 		bag.remove(2);
 		assertTrue(bag.isEmpty());
 
 		bag.add(5);
-		assertTrue(!bag.isEmpty());
+		assertFalse(bag.isEmpty());
 		assertTrue(bag.add(5));
-		assertTrue(!bag.isEmpty());
+		assertFalse(bag.isEmpty());
 		assertEquals(2, bag.size());
 	}
 
@@ -60,14 +61,14 @@ public class BagTest {
 	public void testIterator() throws Exception {
 		Bag<Integer> bag = new Bag<Integer>();
 		Iterator<Integer> iterator = bag.iterator();
-		assertTrue(!iterator.hasNext());
+		assertFalse(iterator.hasNext());
 
 		bag.add(5);
 		iterator = bag.iterator();
 		assertTrue(iterator.hasNext());
 		assertEquals(5, iterator.next().intValue());
 		iterator.remove();
-		assertTrue(!iterator.hasNext());
+		assertFalse(iterator.hasNext());
 		assertTrue(bag.isEmpty());
 	}
 
@@ -88,20 +89,20 @@ public class BagTest {
 		Bag<Integer> bag = new Bag<Integer>();
 		assertTrue(bag.isEmpty());
 		bag.add(5);
-		assertTrue(!bag.isEmpty());
+		assertFalse(bag.isEmpty());
 		bag.add(5);
-		assertTrue(!bag.isEmpty());
-		assertTrue(!bag.remove(0));
+		assertFalse(bag.isEmpty());
+		assertFalse(bag.remove(0));
 		assertTrue(bag.remove(5));
-		assertTrue(!bag.isEmpty());
+		assertFalse(bag.isEmpty());
 		assertTrue(bag.remove(5));
-		assertTrue(!bag.remove(5));
+		assertFalse(bag.remove(5));
 	}
 
 	@Test
 	public void testContains() throws Exception {
 		Bag<Integer> bag = new Bag<Integer>();
-		assertTrue(!bag.contains(5));
+		assertFalse(bag.contains(5));
 		bag.add(5);
 		assertTrue(bag.contains(5));
 	}
@@ -111,7 +112,7 @@ public class BagTest {
 		Bag<Integer> bag = new Bag<Integer>();
 		assertTrue(bag.isEmpty());
 		bag.add(5);
-		assertTrue(!bag.isEmpty());
+		assertFalse(bag.isEmpty());
 		bag.clear();
 		assertTrue(bag.isEmpty());
 	}
