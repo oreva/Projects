@@ -134,16 +134,13 @@ public class BagTest {
 		while (iterator.hasNext()) {
 			String next = iterator.next();
 			System.out.println(next);
-			if (next == "first") {
+			if (next.equals("first")) {
 				assertEquals(next, iterator.next());
-				continue;
-			} else if (next == "second") {
+			} else if (next.equals("second")) {
 				assertEquals(next, iterator.next());
 				assertEquals(next, iterator.next());
-				continue;
-			} else if (next == "third") {
+			} else if (next.equals("third")) {
 				assertEquals(next, iterator.next());
-				continue;
 			}
 		}
 	}
@@ -163,10 +160,7 @@ public class BagTest {
 
 			@Override
 			public boolean equals(Object obj) {
-				if (obj instanceof BagElement) {
-					return ((BagElement) obj).i() == i;
-				}
-				return false;
+				return (obj instanceof BagElement) && ((BagElement) obj).i() == i;
 			}
 
 			@Override
