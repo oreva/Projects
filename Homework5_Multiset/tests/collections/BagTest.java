@@ -117,17 +117,77 @@ public class BagTest {
 	}
 
 	@Test
-	public void testBagOrder() {
-		Bag<Integer> bag = new Bag<Integer>();
-		bag.add(2);
-		bag.add(10);
-		bag.add(2);
-		Iterator<Integer> iterator = bag.iterator();
-		int nextInt = iterator.next();
-		assertEquals(2, nextInt);
-		nextInt = iterator.next();
-		assertEquals(2, nextInt);
-		nextInt = iterator.next();
-		assertEquals(10, nextInt);
+	public void testSameElementsOrder() {
+		Bag<String> bag = new Bag<String>();
+		String first = "first";
+		String second = "second";
+		String third = "third";
+		bag.add(first);
+		bag.add(second);
+		bag.add(third);
+		bag.add(first);
+		bag.add(third);
+		bag.add(second);
+		bag.add(second);
+		Iterator<String> iterator = bag.iterator();
+		System.out.println("testSameElementsOrder:: order of the elements:");
+		while (iterator.hasNext()) {
+			String next = iterator.next();
+			System.out.println(next);
+			if (next == "first") {
+				assertEquals(next, iterator.next());
+				continue;
+			} else if (next == "second") {
+				assertEquals(next, iterator.next());
+				assertEquals(next, iterator.next());
+				continue;
+			} else if (next == "third") {
+				assertEquals(next, iterator.next());
+				continue;
+			}
+		}
+	}
+
+	@Test
+	public void testEqualElementsOrder() {
+		class BagElement {
+			private int i;
+
+			public BagElement(int i) {
+				this.i = i;
+			}
+
+			public int i() {
+				return i;
+			}
+
+			@Override
+			public boolean equals(Object obj) {
+				if (obj instanceof BagElement) {
+					return ((BagElement) obj).i() == i;
+				}
+				return false;
+			}
+
+			@Override
+			public int hashCode() {
+				return i;
+			}
+		}
+
+		Bag<BagElement> bag = new Bag<BagElement>();
+		BagElement element1 = new BagElement(1);
+		BagElement element2 = new BagElement(1);
+		BagElement element3 = new BagElement(2);
+		bag.add(element1);
+		bag.add(element3);
+		bag.add(element2);
+		Iterator<BagElement> iterator = bag.iterator();
+		while (iterator.hasNext()) {
+			if (iterator.next().equals(element1)) {
+				assertTrue(element1.equals(iterator.next()));
+				break;
+			}
+		}
 	}
 }

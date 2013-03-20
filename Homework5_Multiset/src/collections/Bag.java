@@ -10,10 +10,10 @@ import java.util.*;
  * To change this template use File | Settings | File Templates.
  */
 public class Bag<E> extends AbstractCollection<E> {
-	protected AbstractMap<E, ArrayList<E>> innerMap;
+	protected AbstractMap<E, LinkedList<E>> innerMap;
 
 	public Bag() {
-		innerMap = new HashMap<E, ArrayList<E>>();
+		innerMap = new HashMap<E, LinkedList<E>>();
 	}
 
 	@Override
@@ -24,7 +24,7 @@ public class Bag<E> extends AbstractCollection<E> {
 	private class BagIterator<T> implements Iterator<T> {
 		private Iterator<E> innerMapIterator = innerMap().keySet().iterator();
 		private Iterator<T> innerListIterator = null;
-		private ArrayList<E> currentInnerList = null;
+		private LinkedList<E> currentInnerList = null;
 
 		@Override
 		public boolean hasNext() {
@@ -62,20 +62,20 @@ public class Bag<E> extends AbstractCollection<E> {
 	@Override
 	public int size() {
 		int size = 0;
-		for (Map.Entry<E, ArrayList<E>> entry: innerMap().entrySet()) {
+		for (Map.Entry<E, LinkedList<E>> entry: innerMap().entrySet()) {
 			size += entry.getValue().size();
 		}
 		return size;
 	}
 
-	protected AbstractMap<E, ArrayList<E>> innerMap() {
+	protected AbstractMap<E, LinkedList<E>> innerMap() {
 		return innerMap;
 	}
 
 	@Override
 	public boolean add(E e) {
 		if (!innerMap().containsKey(e)) {
-			innerMap().put(e, new ArrayList<E>());
+			innerMap().put(e, new LinkedList<E>());
 		}
 		return innerMap().get(e).add(e);
 	}
@@ -83,8 +83,8 @@ public class Bag<E> extends AbstractCollection<E> {
 	@Override
 	public boolean remove(Object o) {
 		if (innerMap().containsKey(o)) {
-			ArrayList<E> valueList = innerMap().get(o);
-			valueList.remove(0);
+			LinkedList<E> valueList = innerMap().get(o);
+			valueList.remove();
 			if (valueList.isEmpty()) {
 				innerMap().remove(o);
 			}
