@@ -14,8 +14,8 @@ public class ClassImplementorTest {
 
 	@Test
 	public void testImplement() throws Exception {
-		Class c = Class.forName("implementor.ClassImplementor");
-		String strImplementation = new ClassImplementor(c, "ClassImplementorImpl", c.getPackage()).implement();
-		System.out.println(strImplementation); //test comment
+		Class c = Class.forName("implementor.TestClass");
+		String strImplementation = new ClassImplementor(c, "TestClassImpl", c.getPackage()).implement();
+		System.out.println(strImplementation);
 	}
 }
