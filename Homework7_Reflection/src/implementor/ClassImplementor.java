@@ -29,7 +29,7 @@ public class ClassImplementor implements IImplementor {
 	 */
 	public String implement() {
 		//Package
-		String result = (pack != null) ? pack.toString() + ";\n" : "";
+		String result = (pack != null) ? "package " + pack.getName() + ";\n" : "";
 		//Class
 		result += "public class " + name;
 		if (source.isInterface()) {
