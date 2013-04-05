@@ -14,8 +14,10 @@ public class ClassImplementorTest {
 
 	@Test
 	public void testImplement() throws Exception {
-		Class c = Class.forName("implementor.TestClass");
-		String strImplementation = new ClassImplementor(c, "TestClassImpl", c.getPackage()).implement();
+		Class c = Class.forName("examples.UnboundedWildcards");
+		ClassImplementorGeneric ci = new ClassImplementorGeneric(c, "UnboundedWildcards", c.getPackage());
+		//ci.callGenericMethods();
+		String strImplementation = ci.implement();
 		System.out.println(strImplementation);
 	}
 }

@@ -3,6 +3,7 @@ package implementor;
 import util.TypeUtils;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 
 /**
  * Created with IntelliJ IDEA.
@@ -11,15 +12,15 @@ import java.lang.reflect.Method;
  * Time: 3:11 PM
  * To change this template use File | Settings | File Templates.
  */
-public class MethodImplementor implements IImplementor {
+public class MethodImplementorGeneric implements IImplementor {
 	private Method source;
 
-	public MethodImplementor(Method source) {
+	public MethodImplementorGeneric(Method source) {
 		this.source = source;
 	}
 	@Override
 	public String implement() {
-		String result = source.toString();
+		String result = source.toGenericString();
 		String methodName = source.getName();
 		int i = result.indexOf(methodName);
 		// Modifiers added
@@ -36,12 +37,13 @@ public class MethodImplementor implements IImplementor {
 		result += methodName + "(";
 		// Parameters
 		i = 0;
-		Class[] paramTypes = source.getParameterTypes();
-		for (Class t: paramTypes) {
+		//Class[] paramTypes = source.getParameterTypes();
+		Type[] paramTypes = source.getGenericParameterTypes();
+		for (Type t: paramTypes) {
 			//TODO: generics here?
 			i++;
 			String paramName = "param" + String.valueOf(i);    //any param name
-			result += t.getCanonicalName()/*t.getName()*/ + " " + paramName;
+			result += TypeUtils.stringValueOf(t) + " " + paramName;
 			if (i < paramTypes.length) {
 				result += ", ";
 			}

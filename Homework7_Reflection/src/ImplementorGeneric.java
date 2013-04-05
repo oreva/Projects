@@ -1,4 +1,4 @@
-import implementor.ClassImplementor;
+import implementor.ClassImplementorGeneric;
 
 import java.io.FileWriter;
 
@@ -9,7 +9,7 @@ import java.io.FileWriter;
  * Time: 6:16 PM
  * To change this template use File | Settings | File Templates.
  */
-public class Implementor {
+public class ImplementorGeneric {
 	public static void main(String[] args) {
 		/*if (args.length < 1) {
 			System.out.println("Class or interface name is required to implement it.");
@@ -23,10 +23,10 @@ public class Implementor {
 		String className = "java.util.ArrayList";//args[0];
 		try {
 			Class c = Class.forName(className);
-			String newClassCode = new ClassImplementor(c, c.getSimpleName() + "Impl", c.getPackage()).implement();
+			String newClassCode = new ClassImplementorGeneric(c, c.getSimpleName() + "ImplGeneric", c.getPackage()).implement();
 
 			try {
-				FileWriter writer = new FileWriter(dir + "\\" + c.getSimpleName() + "Impl.java");
+				FileWriter writer = new FileWriter(dir + "\\" + c.getSimpleName() + "ImplGeneric.java");
 				writer.write(newClassCode);
 				writer.close();
 			} catch (Exception e) {
