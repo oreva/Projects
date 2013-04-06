@@ -12,10 +12,10 @@ import java.lang.reflect.Type;
  * Time: 3:11 PM
  * To change this template use File | Settings | File Templates.
  */
-public class MethodImplementorGeneric implements IImplementor {
+public class MethodImplementor implements IImplementor {
 	private Method source;
 
-	public MethodImplementorGeneric(Method source) {
+	public MethodImplementor(Method source) {
 		this.source = source;
 	}
 	@Override

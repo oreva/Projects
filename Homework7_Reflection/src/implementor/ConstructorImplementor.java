@@ -13,11 +13,11 @@ import java.lang.reflect.Type;
  * Time: 3:06 PM
  * To change this template use File | Settings | File Templates.
  */
-public class ConstructorImplementorGeneric implements IImplementor {
+public class ConstructorImplementor implements IImplementor {
 	private Constructor source;
 	private String implementationName;
 
-	public ConstructorImplementorGeneric(Constructor source, String implementationName) {
+	public ConstructorImplementor(Constructor source, String implementationName) {
 		this.source = source;
 		this.implementationName = implementationName;
 	}

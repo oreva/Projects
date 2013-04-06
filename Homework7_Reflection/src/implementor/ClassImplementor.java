@@ -13,12 +13,12 @@ import java.lang.reflect.TypeVariable;
  * Time: 6:26 PM
  * To change this template use File | Settings | File Templates.
  */
-public class ClassImplementorGeneric implements IImplementor {
+public class ClassImplementor implements IImplementor {
 	private Class source;
 	private String name;
 	private Package pack;
 
-	public ClassImplementorGeneric(Class source, String implementationName, Package implementationPackage) {
+	public ClassImplementor(Class source, String implementationName, Package implementationPackage) {
 		this.source = source;
 		this.name = implementationName;
 		this.pack = implementationPackage;
@@ -64,7 +64,7 @@ public class ClassImplementorGeneric implements IImplementor {
 		String result = "";
 		Constructor[] constructors = source.getDeclaredConstructors();
 		for (Constructor c: constructors) {
-			result += new ConstructorImplementorGeneric(c, name).implement() + "\n";
+			result += new ConstructorImplementor(c, name).implement() + "\n";
 		}
 		result += "\n";
 		return result;
@@ -74,7 +74,7 @@ public class ClassImplementorGeneric implements IImplementor {
 		String result = "";
 		Method[] methods = source.getDeclaredMethods();
 		for (Method m: methods) {
-			result += new MethodImplementorGeneric(m).implement() + "\n";
+			result += new MethodImplementor(m).implement() + "\n";
 		}
 		result += "\n";
 		return result;
