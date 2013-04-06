@@ -39,7 +39,6 @@ public class ConstructorImplementorGeneric implements IImplementor {
 			i = 0;
 			body = "super(";
 			for (Type t: paramTypes) {
-				//TODO: generics here?
 				i++;
 				String paramName = "param" + String.valueOf(i);    //any param name
 				result += TypeUtils.stringValueOf(t) + " " + paramName;
