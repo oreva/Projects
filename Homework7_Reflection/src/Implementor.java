@@ -11,16 +11,16 @@ import java.io.FileWriter;
  */
 public class Implementor {
 	public static void main(String[] args) {
-		/*if (args.length < 1) {
+		if (args.length < 1) {
 			System.out.println("Class or interface name is required to implement it.");
 			System.exit(0);
-		} */
+		}
 		//Directory to save files
 		String dir = System.getProperty("user.dir");
 		if (args.length > 1) {
 			dir = args[1];
 		}
-		String className = "java.util.HashMap";//args[0];
+		String className = args[0];
 		try {
 			Class c = Class.forName(className);
 			String newClassCode = new ClassImplementor(c, c.getSimpleName() + "Impl", c.getPackage()).implement();

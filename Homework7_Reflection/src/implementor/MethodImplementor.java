@@ -26,52 +26,51 @@ public class MethodImplementor implements IImplementor {
 		if (Modifier.isFinal(source.getModifiers())) {
 			return "";
 		}
-		String result = "";
+		String modifiers = "";
 		String methodName = source.getName();
 
 		// Modifiers
-		result += Modifier.toString(source.getModifiers()) + " ";
-		result = result.replace("abstract", "");
+		modifiers += Modifier.toString(source.getModifiers()) + " ";
+		StringBuilder result = new StringBuilder(modifiers.replace("abstract", ""));
 		//Type parameters
 		TypeVariable[] tv = source.getTypeParameters();
 		if (tv.length > 0) {
-			result += "<";
+			result.append("<");
 			for (TypeVariable v: tv) {
-				result += TypeUtils.stringValueOf(v);
+				result.append(TypeUtils.stringValueOf(v));
 				if (v != tv[tv.length - 1]) {
-					result += ", ";
+					result.append(", ");
 				}
 			}
-			result += "> ";
+			result.append("> ");
 		}
 		//Return type
-		result += TypeUtils.stringValueOf(source.getGenericReturnType()) + " ";
+		result.append(TypeUtils.stringValueOf(source.getGenericReturnType()) + " ");
 		// Name
-		result += methodName + "(";
+		result.append(methodName + "(");
 		// Parameters
 		int i = 0;
 		Type[] paramTypes = source.getGenericParameterTypes();
 		for (Type t: paramTypes) {
 			i++;
 			String paramName = "param" + String.valueOf(i);    //any param name
-			result += TypeUtils.stringValueOf(t) + " " + paramName;
+			result.append(TypeUtils.stringValueOf(t) + " " + paramName);
 			if (i < paramTypes.length) {
-				result += ", ";
+				result.append(", ");
 			}
 		}
 		if (source.getReturnType() == Void.TYPE) {
-			result += ") {}";
+			result.append(") {}");
 		} else {
-			result += ") { return ";
+			result.append(") { return ");
 			if (source.getReturnType().isPrimitive()) {
 				Class wrapper = TypeUtils.getWrapperType(source.getReturnType());
-				result += "(" + wrapper.getCanonicalName() + ")"; //cast to wrapper type to return default value Object
+				result.append("(" + wrapper.getCanonicalName() + ")"); //cast to wrapper type to return default value Object
 			}
 			// Return default value
-			result += String.valueOf(source.getDefaultValue());
-			result += "; }";
+			result.append(String.valueOf(source.getDefaultValue()));
+			result.append("; }");
 		}
-
-		return result;
+		return result.toString().trim();
 	}
 }

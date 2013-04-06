@@ -27,42 +27,43 @@ public class ConstructorImplementor implements IImplementor {
 		String oldConstructor = source.toGenericString();
 		int i = oldConstructor.indexOf(source.getName());
 		// Modifiers added
-		String result = oldConstructor.substring(0, i);
+		StringBuilder result = new StringBuilder(oldConstructor.substring(0, i));
 		// Name
-		result += implementationName + "(";
+		result.append(implementationName);
+		result.append("(");
 		//Parameters
 		String body = "";
 		Type[] paramTypes = source.getGenericParameterTypes();
 		if (paramTypes.length == 0 || Modifier.isPrivate(source.getModifiers())) {
-			result += ")";
+			result.append(")");
 		} else {
 			i = 0;
 			body = "super(";
 			for (Type t: paramTypes) {
 				i++;
 				String paramName = "param" + String.valueOf(i);    //any param name
-				result += TypeUtils.stringValueOf(t) + " " + paramName;
+				result.append(TypeUtils.stringValueOf(t) + " " + paramName);
 				body += paramName;
 				if (i < paramTypes.length) {
-					result += ", ";
+					result.append(", ");
 					body += ", ";
 				}
 			}
 			body += ");";
-			result += ")";
+			result.append(")");
 		}
 		//Exceptions
 		Type[] exceptions = source.getGenericExceptionTypes();
 		if (exceptions.length > 0) {
-			result += " throws ";
+			result.append(" throws ");
 			for (Type e: exceptions) {
-				result += e.getClass().getCanonicalName();
+				result.append(TypeUtils.stringValueOf(e));
 				if (e != exceptions[exceptions.length - 1]) {
-					result += ", ";
+					result.append(", ");
 				}
 			}
 		}
-		result += "{ " + body + " }";
-		return result;
+		result.append("{ " + body + " }");
+		return result.toString().trim();
 	}
 }

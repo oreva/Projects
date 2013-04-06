@@ -29,7 +29,12 @@ public class ClassImplementor implements IImplementor {
 	 */
 	public String implement() {
 		//Package
-		String result = (pack != null) ? "package " + pack.getName() + ";\n" : "";
+		StringBuilder result = new StringBuilder();
+		if (pack != null) {
+			result.append("package ");
+			result.append(pack.getName());
+			result.append(";\n");
+		}
 		//Class params
 		TypeVariable[] tv = source.getTypeParameters();
 		String genericTypeString = "";
@@ -44,39 +49,45 @@ public class ClassImplementor implements IImplementor {
 			genericTypeString += ">";
 		}
 		// Class name
-		result += "public class " + name + genericTypeString;
+		result.append("public class ");
+		result.append(name);
+		result.append(genericTypeString);
 		if (source.isInterface()) {
-			result += " implements ";
+			result.append(" implements ");
 		} else {
-			result += " extends ";
+			result.append(" extends ");
 		}
-		result += source.getName() + genericTypeString + " {\n";
+		result.append(source.getName());
+		result.append(genericTypeString);
+		result.append(" {\n");
 		//Constructors
-		result += implementConstructors();
+		result.append(implementConstructors());
 		//Methods
-		result += implementMethods();
+		result.append(implementMethods());
 		//End of the class
-		result += "}";
-		return result;
+		result.append("}");
+		return result.toString().trim();
 	}
 
 	private String implementConstructors() {
-		String result = "";
+		StringBuilder result = new StringBuilder();
 		Constructor[] constructors = source.getDeclaredConstructors();
 		for (Constructor c: constructors) {
-			result += new ConstructorImplementor(c, name).implement() + "\n";
+			result.append(new ConstructorImplementor(c, name).implement());
+			result.append("\n");
 		}
-		result += "\n";
-		return result;
+		result.append("\n");
+		return result.toString().trim();
 	}
 
 	private String implementMethods() {
-		String result = "";
+		StringBuilder result = new StringBuilder();
 		Method[] methods = source.getDeclaredMethods();
 		for (Method m: methods) {
-			result += new MethodImplementor(m).implement() + "\n";
+			result.append(new MethodImplementor(m).implement());
+			result.append("\n");
 		}
-		result += "\n";
-		return result;
+		result.append("\n");
+		return result.toString().trim();
 	}
 }
