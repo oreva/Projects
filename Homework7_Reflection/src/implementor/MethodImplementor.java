@@ -3,7 +3,9 @@ package implementor;
 import util.TypeUtils;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,27 +22,36 @@ public class MethodImplementor implements IImplementor {
 	}
 	@Override
 	public String implement() {
-		String result = source.toGenericString();
-		String methodName = source.getName();
-		int i = result.indexOf(methodName);
-		// Modifiers added
-		result = result.substring(0, i);
-		// Name
-		String className = source.getDeclaringClass().getCanonicalName();
-		if (result.indexOf(className) >= 0) {
-			// Remove class name before the method name
-			result = result.replaceAll(className, "");
-			i = result.lastIndexOf(".");
-			result = result.substring(0, i) + result.substring(i + 1);
+		//do not implement final methods
+		if (Modifier.isFinal(source.getModifiers())) {
+			return "";
 		}
-		result = result.replaceAll("abstract", "");
+		String result = "";
+		String methodName = source.getName();
+
+		// Modifiers
+		result += Modifier.toString(source.getModifiers()) + " ";
+		result = result.replace("abstract", "");
+		//Type parameters
+		TypeVariable[] tv = source.getTypeParameters();
+		if (tv.length > 0) {
+			result += "<";
+			for (TypeVariable v: tv) {
+				result += TypeUtils.stringValueOf(v);
+				if (v != tv[tv.length - 1]) {
+					result += ", ";
+				}
+			}
+			result += "> ";
+		}
+		//Return type
+		result += TypeUtils.stringValueOf(source.getGenericReturnType()) + " ";
+		// Name
 		result += methodName + "(";
 		// Parameters
-		i = 0;
-		//Class[] paramTypes = source.getParameterTypes();
+		int i = 0;
 		Type[] paramTypes = source.getGenericParameterTypes();
 		for (Type t: paramTypes) {
-			//TODO: generics here?
 			i++;
 			String paramName = "param" + String.valueOf(i);    //any param name
 			result += TypeUtils.stringValueOf(t) + " " + paramName;

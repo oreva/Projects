@@ -49,7 +49,6 @@ public class ConstructorImplementor implements IImplementor {
 				}
 			}
 			body += ");";
-			//result += "){ " + body + " }";
 			result += ")";
 		}
 		//Exceptions
