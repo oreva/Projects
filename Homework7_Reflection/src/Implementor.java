@@ -23,10 +23,10 @@ public class Implementor {
 		String className = args[0];
 		try {
 			Class c = Class.forName(className);
-			String newClassCode = new ClassImplementor(c, c.getSimpleName() + "ImplGeneric", c.getPackage()).implement();
+			String newClassCode = new ClassImplementor(c, c.getSimpleName() + "Impl", c.getPackage()).implement();
 
 			try {
-				FileWriter writer = new FileWriter(dir + "\\" + c.getSimpleName() + "ImplGeneric.java");
+				FileWriter writer = new FileWriter(dir + "\\" + c.getSimpleName() + "Impl.java");
 				writer.write(newClassCode);
 				writer.close();
 			} catch (Exception e) {
