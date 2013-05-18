@@ -1,0 +1,1 @@
+CREATE USER study WITH PASSWORD 'study';
