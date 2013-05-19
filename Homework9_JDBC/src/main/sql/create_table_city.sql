@@ -7,7 +7,7 @@ CREATE TABLE city
   id serial NOT NULL,
   name character varying(180),
   country_id bigint NOT NULL,
-  region_id bigint NOT NULL,
+  region_id bigint,
   CONSTRAINT city_pkey PRIMARY KEY (id),
   CONSTRAINT country_fkey FOREIGN KEY (country_id)
       REFERENCES country (id) MATCH SIMPLE

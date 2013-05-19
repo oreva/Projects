@@ -39,7 +39,7 @@ public class GeoFileParser implements Closeable {
 
 	public GeoItem parseNextLineAsGeoItem() throws GeoItemFormatException {
 		String[] values = parseNextLine();
-		if (values != null) { //TODO: pererobiti oce!!!
+		if (values != null) {
 			return new GeoItem(values);
 		}
 		return null;

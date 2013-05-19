@@ -83,16 +83,24 @@ public class GeoDataService {
 		}
 	}
 
-	public City loadCity(String cityName, int countryId, int regionId) {
+	public City loadCity(String cityName, Integer countryId, Integer regionId) {
 		Connection connection = null;
 		try {
 			connection = DBManager.instance().getConnection();
 			Statement statement = connection.createStatement();
-			String sql = "select id from city where name = '" + cityName + "' and country_id = " + countryId + " and region_id = " + regionId;
+			String sql = "select id from city where name = '" + cityName + "' and country_id = " + countryId;
+			if (regionId != null) {
+				sql += " and region_id = " + regionId;
+			} else {
+				sql += " and region_id is null";
+			}
 			ResultSet resultSet = statement.executeQuery(sql);
 			City city = null;
 			while (resultSet.next()) {
-				city = new City(resultSet.getInt(1), cityName, countryId, regionId);
+				city = new City(resultSet.getInt(1), cityName, countryId);
+				if (regionId != null) {
+					city.setRegionId(regionId);
+				}
 				break;
 			}
 			return city;
@@ -113,7 +121,12 @@ public class GeoDataService {
 		try {
 			connection = DBManager.instance().getConnection();
 			Statement statement = connection.createStatement();
-			String sql = "select id, latitude, longitude, accuracy from postcode where value = '" + value + "' and country_id = " + countryId + " and region_id = " + regionId;
+			String sql = "select id, latitude, longitude, accuracy from postcode where value = '" + value + "' and country_id = " + countryId;
+			if (regionId != null) {
+				sql += " and region_id = " + regionId;
+			} else {
+				sql += " and region_id is null";
+			}
 			if (cityId != null) {
 				sql += " and city_id = " + cityId;
 			} else {
@@ -128,9 +141,13 @@ public class GeoDataService {
 						resultSet.getDouble(2),
 						resultSet.getDouble(3),
 						resultSet.getDouble(4),
-						countryId,
-						regionId,
-						cityId);
+						countryId);
+				if (regionId != null) {
+					postcode.setRegionId(regionId);
+				}
+				if (cityId != null) {
+					postcode.setCityId(cityId);
+				}
 				break;
 			}
 			return postcode;
@@ -183,7 +200,7 @@ public class GeoDataService {
 		}
 	}
 
-	protected void importCity(String cityName, int countryId, int regionId) {
+	protected void importCity(String cityName, Integer countryId, Integer regionId) {
 		try {
 			String workingDir = System.getProperty("user.dir");
 			SmallContentReader reader = new SmallContentReader(new BufferedReader(new FileReader(workingDir + "/Homework9_JDBC/src/main/sql/queries/import_city.sql")));
@@ -193,8 +210,8 @@ public class GeoDataService {
 			Connection connection = DBManager.instance().getConnection();
 			PreparedStatement statement = connection.prepareStatement(sql);
 			statement.setString(1, cityName);
-			statement.setInt(2, countryId);
-			statement.setInt(3, regionId);
+			statement.setObject(2, countryId);
+			statement.setObject(3, regionId);
 			statement.execute();
 			connection.close();
 
@@ -235,7 +252,6 @@ public class GeoDataService {
 			statement.setObject(8, countryId);
 			statement.setString(9, postcode);
 			statement.setObject(10, countryId);
-			statement.setObject(11, regionId);
 			statement.execute();
 			connection.close();
 

@@ -86,16 +86,12 @@ public class Postcode {
 	                double lat,
 	                double lon,
 	                double accuracy,
-	                int countryId,
-	                int regionId,
-	                int cityId) {
+	                int countryId) {
 		this.id = id;
 		this.value = value;
 		this.latitude = lat;
 		this.longitude = lon;
 		this.accuracy = accuracy;
 		this.countryId = countryId;
-		this.regionId = regionId;
-		this.cityId = cityId;
 	}
 }

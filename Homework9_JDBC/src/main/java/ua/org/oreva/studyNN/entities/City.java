@@ -45,10 +45,9 @@ public class City {
 		regionId = newId;
 	}
 
-	public City(int id, String name, int countryId, int regionId) {
+	public City(int id, String name, int countryId) {
 		this.id = id;
 		this.name = name;
 		this.countryId = countryId;
-		this.regionId = regionId;
 	}
 }

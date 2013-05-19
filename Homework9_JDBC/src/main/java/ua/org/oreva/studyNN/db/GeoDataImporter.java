@@ -65,6 +65,8 @@ public class GeoDataImporter {
 		} else if (item.hasProperty(GeoItem.REGION3)) {
 			regionName = item.getProperty(GeoItem.REGION3);
 			regionPostCode = item.getProperty(GeoItem.POST_CODE3);
+		} else {
+			return null; //no region
 		}
 		Region region = GeoDataService.instance().loadRegion(regionName, country.id());
 		if (region == null) {
@@ -80,11 +82,12 @@ public class GeoDataImporter {
 	public City importCity(GeoItem item, Country country, Region region) {
 		String cityName = item.getProperty(GeoItem.CITY);
 		String cityPostCode = item.getProperty(GeoItem.POST_CODE);
+		Integer regionId = region != null ? region.id() : null;
 
-		City city = GeoDataService.instance().loadCity(cityName, country.id(), region.id());
+		City city = GeoDataService.instance().loadCity(cityName, country.id(), regionId);
 		if (city == null) {
-			GeoDataService.instance().importCity(cityName, country.id(), region.id());
-			city = GeoDataService.instance().loadCity(cityName, country.id(), region.id());
+			GeoDataService.instance().importCity(cityName, country.id(), regionId);
+			city = GeoDataService.instance().loadCity(cityName, country.id(), regionId);
 		}
 		importPostcode(item, cityPostCode, country, region, city);
 		return city;
@@ -97,6 +100,7 @@ public class GeoDataImporter {
 	                               Region region,
 	                               City city) {
 		Integer cityId = null;
+		Integer regionId = region != null ? region.id() : null;
 		Double lat = null;
 		Double lon = null;
 		Double accuracy = null;
@@ -106,6 +110,6 @@ public class GeoDataImporter {
 			lon = item.hasProperty(GeoItem.LONGITUDE) ? Double.valueOf(item.getProperty(GeoItem.LONGITUDE)) : null;
 			accuracy = item.hasProperty(GeoItem.ACCURACY) ? Double.valueOf(item.getProperty(GeoItem.ACCURACY)) : null;
 		}
-		GeoDataService.instance().importPostcode(postcodeValue, lat, lon, accuracy, country.id(), region.id(), cityId);
+		GeoDataService.instance().importPostcode(postcodeValue, lat, lon, accuracy, country.id(), regionId, cityId);
 	}
 }

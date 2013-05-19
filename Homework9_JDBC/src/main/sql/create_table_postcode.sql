@@ -9,7 +9,7 @@ CREATE TABLE postcode
   latitude real,
   longitude real,
   accuracy real,
-  country_id bigint,
+  country_id bigint NOT NULL,
   region_id bigint,
   city_id bigint,
   CONSTRAINT postcode_pkey PRIMARY KEY (id),

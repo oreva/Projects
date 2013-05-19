@@ -7,6 +7,5 @@ and not exists
   (select 1
   from postcode p
   where p.value = ?
-  and p.country_id = ?
-  and p.region_id = ?)
+  and p.country_id = ?)
 )
