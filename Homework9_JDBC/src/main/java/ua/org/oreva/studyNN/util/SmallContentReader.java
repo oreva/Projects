@@ -24,8 +24,10 @@ public class SmallContentReader implements Closeable {
 
 		while (line != null) {
 			sb.append(line);
-			sb.append("\n");
 			line = reader.readLine();
+			if (line != null) {
+				sb.append("\n");
+			}
 		}
 		String everything = sb.toString();
 		return everything;
