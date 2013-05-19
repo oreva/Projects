@@ -148,7 +148,8 @@ public class GeoDataService {
 
 	public void importCountry(String countryCode) {
 		try {
-			SmallContentReader reader = new SmallContentReader(new BufferedReader(new FileReader("D:/Education/JavaAcademy/Projects/Homework9_JDBC/src/main/sql/queries/import_country.sql")));
+			String workingDir = System.getProperty("user.dir");
+			SmallContentReader reader = new SmallContentReader(new BufferedReader(new FileReader(workingDir + "/Homework9_JDBC/src/main/sql/queries/import_country.sql")));
 			String sql = reader.readAll();
 			reader.close();
 
@@ -165,7 +166,8 @@ public class GeoDataService {
 
 	protected void importRegion(String regionName, int countryId) {
 		try {
-			SmallContentReader reader = new SmallContentReader(new BufferedReader(new FileReader("D:/Education/JavaAcademy/Projects/Homework9_JDBC/src/main/sql/queries/import_region.sql")));
+			String workingDir = System.getProperty("user.dir");
+			SmallContentReader reader = new SmallContentReader(new BufferedReader(new FileReader(workingDir + "/Homework9_JDBC/src/main/sql/queries/import_region.sql")));
 			String sql = reader.readAll();
 			reader.close();
 
@@ -183,7 +185,8 @@ public class GeoDataService {
 
 	protected void importCity(String cityName, int countryId, int regionId) {
 		try {
-			SmallContentReader reader = new SmallContentReader(new BufferedReader(new FileReader("D:/Education/JavaAcademy/Projects/Homework9_JDBC/src/main/sql/queries/import_city.sql")));
+			String workingDir = System.getProperty("user.dir");
+			SmallContentReader reader = new SmallContentReader(new BufferedReader(new FileReader(workingDir + "/Homework9_JDBC/src/main/sql/queries/import_city.sql")));
 			String sql = reader.readAll();
 			reader.close();
 
@@ -215,7 +218,8 @@ public class GeoDataService {
 	protected void importPostcode(String postcode, Double latitude, Double longitude, Double accuracy,
 	                              Integer countryId, Integer regionId, Integer cityId) {
 		try {
-			SmallContentReader reader = new SmallContentReader(new BufferedReader(new FileReader("D:/Education/JavaAcademy/Projects/Homework9_JDBC/src/main/sql/queries/import_postcode.sql")));
+			String workingDir = System.getProperty("user.dir");
+			SmallContentReader reader = new SmallContentReader(new BufferedReader(new FileReader(workingDir + "/Homework9_JDBC/src/main/sql/queries/import_postcode.sql")));
 			String sql = reader.readAll();
 			reader.close();
 
@@ -228,6 +232,10 @@ public class GeoDataService {
 			statement.setObject(5, countryId);
 			statement.setObject(6, regionId);
 			statement.setObject(7, cityId);
+			statement.setObject(8, countryId);
+			statement.setString(9, postcode);
+			statement.setObject(10, countryId);
+			statement.setObject(11, regionId);
 			statement.execute();
 			connection.close();
 

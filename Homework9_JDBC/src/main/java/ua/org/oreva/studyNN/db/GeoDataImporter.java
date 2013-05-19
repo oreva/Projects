@@ -91,7 +91,7 @@ public class GeoDataImporter {
 	}
 
 
-	public Postcode importPostcode(GeoItem item,
+	public void importPostcode(GeoItem item,
 	                               String postcodeValue,
 	                               Country country,
 	                               Region region,
@@ -106,11 +106,6 @@ public class GeoDataImporter {
 			lon = item.hasProperty(GeoItem.LONGITUDE) ? Double.valueOf(item.getProperty(GeoItem.LONGITUDE)) : null;
 			accuracy = item.hasProperty(GeoItem.ACCURACY) ? Double.valueOf(item.getProperty(GeoItem.ACCURACY)) : null;
 		}
-		Postcode postcode = GeoDataService.instance().loadPostcode(postcodeValue, country.id(), region.id(), cityId);
-		if (postcode == null) {
-			GeoDataService.instance().importPostcode(postcodeValue, lat, lon, accuracy, country.id(), region.id(), cityId);
-			postcode = GeoDataService.instance().loadPostcode(postcodeValue, country.id(), region.id(), cityId);
-		}
-		return postcode;
+		GeoDataService.instance().importPostcode(postcodeValue, lat, lon, accuracy, country.id(), region.id(), cityId);
 	}
 }
