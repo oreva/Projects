@@ -42,7 +42,7 @@ public class Client implements Runnable {
 		while (true) {
 			Task task = taskFactory.generateTask();
 			Object result = runner.run(task, task.generateRandomInput());
-			System.out.println("IClient " + name + ", task#" + i + ", result: " + result);
+			System.out.println("Client " + name + ", task#" + i + ", result: " + result);
 			i++;
 			Thread.yield();
 		}

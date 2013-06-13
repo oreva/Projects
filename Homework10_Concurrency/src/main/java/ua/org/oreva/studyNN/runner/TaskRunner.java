@@ -11,5 +11,5 @@ import ua.org.oreva.studyNN.task.Task;
  */
 public interface TaskRunner {
 	<X, Y> X run(Task<X, Y> task, Y value);
-	public void shutdown();
+	void shutdown();
 }

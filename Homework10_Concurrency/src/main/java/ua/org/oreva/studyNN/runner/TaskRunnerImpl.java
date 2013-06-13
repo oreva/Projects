@@ -15,11 +15,11 @@ import java.util.concurrent.*;
 public class TaskRunnerImpl implements TaskRunner {
 	private int numOfThreads;
 	private ExecutorService exec;
-	private ArrayList<Task> taskQueue;
+	private ArrayList<TaskCall> taskQueue;
 
 	public TaskRunnerImpl(int numberOfThreads) {
 		this.numOfThreads = numberOfThreads;
-		taskQueue = new ArrayList<Task>();
+		taskQueue = new ArrayList<TaskCall>();
 	}
 
 	public void shutdown() {
@@ -36,18 +36,38 @@ public class TaskRunnerImpl implements TaskRunner {
 
 	@Override
 	public <X, Y> X run(Task<X, Y> task, Y value) {
-		taskQueue.add(task);
-		Future<X> future = executorService().submit(new TaskCall<X, Y>(task, value));
 		try {
-			//sleep for test. TODO: remove sleep
-			//TimeUnit.MILLISECONDS.sleep(1000);
-			return future.get();
-		} catch (InterruptedException e1) {
-			System.out.println(e1);
-		} catch (ExecutionException e2) {
-			System.out.println(e2);
+			addTaskToQueue(new TaskCall<X, Y>(task, value));
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		try {
+			Future<X> future = runQueuedTask();
+			try {
+				return future.get();
+			} catch (ExecutionException e) {
+				e.printStackTrace();
+			}
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
 		return null;
+	}
+
+	private synchronized <X, Y> void addTaskToQueue(TaskCall<X, Y> task) throws InterruptedException {
+		while (task == null) {
+			wait();
+		}
+		taskQueue.add(task);
+		notify();
+	}
+
+	private synchronized <X> Future<X> runQueuedTask() throws InterruptedException {
+		while (taskQueue.isEmpty()) {
+			wait();
+		}
+		Future<X> future = executorService().submit(taskQueue.remove(0));
+		return future;
 	}
 
 	private class TaskCall<A, B> implements Callable<A> {
