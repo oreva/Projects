@@ -3,6 +3,7 @@ package ua.org.oreva.studyNN.runner;
 import ua.org.oreva.studyNN.task.Task;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.concurrent.*;
 
 /**
@@ -14,73 +15,78 @@ import java.util.concurrent.*;
  */
 public class TaskRunnerImpl implements TaskRunner {
 	private int numOfThreads;
-	private ExecutorService exec;
-	private ArrayList<TaskCall> taskQueue;
+	private LinkedList<TaskCall> taskQueue;
+	private LinkedList<Thread> threads;
 
 	public TaskRunnerImpl(int numberOfThreads) {
 		this.numOfThreads = numberOfThreads;
-		taskQueue = new ArrayList<TaskCall>();
+		taskQueue = new LinkedList<TaskCall>();
+		threads = new LinkedList<Thread>();
 	}
 
 	public void shutdown() {
-		executorService().shutdown();
-		exec = null;
-	}
-
-	private ExecutorService executorService() {
-		if (exec == null) {
-			exec = Executors.newFixedThreadPool(numOfThreads);
+		for (Thread t: threads) {
+			t.interrupt();
 		}
-		return exec;
 	}
 
 	@Override
 	public <X, Y> X run(Task<X, Y> task, Y value) {
-		try {
-			addTaskToQueue(new TaskCall<X, Y>(task, value));
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		TaskCall<X, Y> taskCall = new TaskCall<X, Y>(task, value);
+		addTaskToQueue(taskCall);
+		runQueuedTask();
+		return getTaskCallResult(taskCall);
+	}
+
+	private synchronized <X, Y> void addTaskToQueue(TaskCall<X, Y> task) {
+		if (threads.size() < numOfThreads) {
+			taskQueue.add(task);
 		}
-		try {
-			Future<X> future = runQueuedTask();
+	}
+
+	private synchronized void runQueuedTask() {
+		if (!taskQueue.isEmpty() && threads.size() < numOfThreads) {
+			Thread t = new Thread(taskQueue.remove());
+			threads.add(t);
+			t.start();
+		}
+	}
+
+	private synchronized <X, Y> X getTaskCallResult(TaskCall<X, Y> taskCall) {
+		while (!taskCall.hasResult()) {
 			try {
-				return future.get();
-			} catch (ExecutionException e) {
+				wait();
+			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-		} catch (InterruptedException e) {
-			e.printStackTrace();
 		}
-		return null;
+		notifyAll();
+		return taskCall.getResult();
 	}
 
-	private synchronized <X, Y> void addTaskToQueue(TaskCall<X, Y> task) throws InterruptedException {
-		while (task == null) {
-			wait();
-		}
-		taskQueue.add(task);
-		notify();
-	}
-
-	private synchronized <X> Future<X> runQueuedTask() throws InterruptedException {
-		while (taskQueue.isEmpty()) {
-			wait();
-		}
-		Future<X> future = executorService().submit(taskQueue.remove(0));
-		return future;
-	}
-
-	private class TaskCall<A, B> implements Callable<A> {
+	private class TaskCall<A, B> implements Runnable {
 		private Task<A, B> task;
 		private B value;
+		private A result;
+		private boolean hasResult;
+
 		public TaskCall(Task<A, B> task, B value) {
 			this.task = task;
 			this.value = value;
 		}
 
+		public A getResult() {
+			return result;
+		}
+
+		public boolean hasResult() {
+			return this.hasResult;
+		}
+
 		@Override
-		public A call() throws Exception {
-			return task.run(value);
+		public void run() {
+			result = task.run(value);
+			hasResult = true;
 		}
 	}
 }

@@ -18,7 +18,7 @@ public class App
 {
     public static void main( String[] args )
     {
-	    int numberOfThreads = 2;
+	    int numberOfThreads = 5;
 	    int numerOfClients = 4;
 	    TaskFactory taskFactory = new IntToStringTaskFactory();
 	    TaskRunner runner = new TaskRunnerImpl(numberOfThreads);
