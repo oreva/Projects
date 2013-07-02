@@ -31,7 +31,13 @@ public class TaskRunnerImpl implements TaskRunner {
 	}
 
 	@Override
-	public <X, Y> X run(Task<X, Y> task, Y value) {
+	public <X, Y> X run(Task<X, Y> task, Y value) throws TaskRunnerRejectException{
+		// Reject all threads that we cannot handle
+		synchronized (threads) {
+			if (threads.size() >= numOfThreads) {
+				throw new TaskRunnerRejectException();
+			}
+		}
 		TaskCall<X, Y> taskCall = new TaskCall<X, Y>(task, value);
 		addTaskToQueue(taskCall);
 		runQueuedTask();
@@ -87,8 +93,11 @@ public class TaskRunnerImpl implements TaskRunner {
 
 		@Override
 		public void run() {
-			result = task.run(value);
-			hasResult = true;
+			while (!hasResult && !Thread.interrupted()) {
+				result = task.run(value);
+				hasResult = true;
+			}
+
 		}
 	}
 }

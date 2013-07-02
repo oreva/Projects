@@ -1,6 +1,7 @@
 package ua.org.oreva.studyNN.client;
 
 import ua.org.oreva.studyNN.runner.TaskRunner;
+import ua.org.oreva.studyNN.runner.TaskRunnerRejectException;
 import ua.org.oreva.studyNN.task.Task;
 import ua.org.oreva.studyNN.task.TaskFactory;
 
@@ -39,12 +40,17 @@ public class Client implements Runnable {
 			throw new NoTaskFactoryException();
 		}
 		int i = 0;
-		while (true) {
-			Task task = taskFactory.generateTask();
-			Object result = runner.run(task, task.generateRandomInput());
-			System.out.println("Client " + name + ", task#" + i + ", result: " + result);
-			i++;
-			Thread.yield();
+		try {
+			while (true) {
+				Task task = taskFactory.generateTask();
+				Object result = runner.run(task, task.generateRandomInput());
+				System.out.println("Client " + name + ", task#" + i + ", result: " + result);
+				i++;
+				Thread.yield();
+			}
+		} catch (TaskRunnerRejectException e) {
+			System.out.println("Client " + name + " has rejected");
 		}
+
 	}
 }

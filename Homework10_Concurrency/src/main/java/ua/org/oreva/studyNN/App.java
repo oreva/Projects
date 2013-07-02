@@ -8,6 +8,7 @@ import ua.org.oreva.studyNN.task.TaskFactory;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Hello world!
@@ -15,8 +16,7 @@ import java.util.concurrent.Executors;
  */
 public class App 
 {
-    public static void main( String[] args )
-    {
+    public static void main( String[] args ) throws InterruptedException {
 	    int numberOfThreads = 5;
 	    int numerOfClients = 4;
 	    TaskFactory taskFactory = new IntToStringTaskFactory();
@@ -30,7 +30,8 @@ public class App
 	    for (int i = 0; i < numerOfClients; i++) {
 		    s.submit(clients[i]);
 	    }
-	    s.shutdown();
+		s.shutdown();
+	    TimeUnit.SECONDS.sleep(5);
 	    runner.shutdown();
     }
 }
