@@ -2,9 +2,9 @@ package ua.org.oreva.studyNN.runner;
 
 import ua.org.oreva.studyNN.task.Task;
 
-import java.util.ArrayList;
+import java.sql.Time;
 import java.util.LinkedList;
-import java.util.concurrent.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created with IntelliJ IDEA.
@@ -52,15 +52,17 @@ public class TaskRunnerImpl implements TaskRunner {
 		}
 	}
 
-	private synchronized <X, Y> X getTaskCallResult(TaskCall<X, Y> taskCall) {
-		while (!taskCall.hasResult()) {
-			try {
-				wait();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+	private <X, Y> X getTaskCallResult(TaskCall<X, Y> taskCall) {
+		synchronized (taskCall) {
+			while (!taskCall.hasResult()) {
+				try {
+					TimeUnit.SECONDS.sleep(1);
+					Thread.yield();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
 		}
-		notifyAll();
 		return taskCall.getResult();
 	}
 
