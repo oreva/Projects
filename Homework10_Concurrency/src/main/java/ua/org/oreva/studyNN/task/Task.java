@@ -12,4 +12,7 @@ public interface Task<X, Y> {
 
 	X runWithRandomInput();
 	Y generateRandomInput();
+
+	String getName();
+	void setName(String name);
 }

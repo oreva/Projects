@@ -8,8 +8,8 @@ package ua.org.oreva.studyNN.task;
  * To change this template use File | Settings | File Templates.
  */
 public class IntToStringTask extends TaskImpl<String, Integer> {
-	public IntToStringTask() {
-		super(String.class, Integer.class);
+	public IntToStringTask(String name) {
+		super(String.class, Integer.class, name);
 	}
 
 	@Override

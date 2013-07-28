@@ -24,18 +24,18 @@ public class TaskRunnerImpl implements TaskRunner {
 		threads = new LinkedList<Thread>();
 	}
 
-	public void shutdown() {
+	public void shutdownNow() {
 		for (Thread t: threads) {
 			t.interrupt();
 		}
 	}
 
 	@Override
-	public <X, Y> X run(Task<X, Y> task, Y value) throws TaskRunnerRejectException{
+	public <X, Y> X run(Task<X, Y> task, Y value) {
 		// Reject all threads that we cannot handle
 		synchronized (threads) {
 			if (threads.size() >= numOfThreads) {
-				throw new TaskRunnerRejectException();
+				//throw new TaskRunnerRejectException();
 			}
 		}
 		TaskCall<X, Y> taskCall = new TaskCall<X, Y>(task, value);

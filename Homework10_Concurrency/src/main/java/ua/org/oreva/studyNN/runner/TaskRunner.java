@@ -10,6 +10,6 @@ import ua.org.oreva.studyNN.task.Task;
  * To change this template use File | Settings | File Templates.
  */
 public interface TaskRunner {
-	<X, Y> X run(Task<X, Y> task, Y value) throws TaskRunnerRejectException;
-	void shutdown();
+	<X, Y> X run(Task<X, Y> task, Y value);
+	void shutdownNow();
 }

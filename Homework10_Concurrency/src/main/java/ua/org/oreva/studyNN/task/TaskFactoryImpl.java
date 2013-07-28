@@ -20,4 +20,11 @@ public class TaskFactoryImpl<X, Y> implements TaskFactory<X, Y> {
 	public Task<X, Y> generateTask() {
 		return new TaskImpl<X, Y>(resultType, inputType);
 	}
+
+	@Override
+	public Task<X, Y> generateTaskWithName(String name) {
+		TaskImpl<X, Y> t = new TaskImpl<X, Y>(resultType, inputType);
+		t.setName(name);
+		return t;
+	}
 }

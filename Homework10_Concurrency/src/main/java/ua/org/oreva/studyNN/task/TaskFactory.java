@@ -9,4 +9,5 @@ package ua.org.oreva.studyNN.task;
  */
 public interface TaskFactory<X, Y> {
 	Task<X, Y> generateTask();
+	Task<X, Y> generateTaskWithName(String name);
 }

@@ -10,10 +10,16 @@ package ua.org.oreva.studyNN.task;
 public class TaskImpl<X, Y> implements Task<X, Y> {
 	protected Class<X> resultType;
 	protected Class<Y> inputType;
+	private String name;
 
 	public TaskImpl(Class<X> resultType, Class<Y> inputType) {
 		this.resultType = resultType;
 		this.inputType = inputType;
+	}
+
+	public TaskImpl(Class<X> resultType, Class<Y> inputType, String name) {
+		this(resultType, inputType);
+		setName(name);
 	}
 
 	@Override
@@ -41,4 +47,16 @@ public class TaskImpl<X, Y> implements Task<X, Y> {
 			throw new RuntimeException(e);
 		}
 	}
+
+	@Override
+	public String getName() {
+		return name;
+	}
+
+	@Override
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
 }

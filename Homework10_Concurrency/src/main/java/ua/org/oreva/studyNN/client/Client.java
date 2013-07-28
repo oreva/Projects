@@ -5,6 +5,8 @@ import ua.org.oreva.studyNN.runner.TaskRunnerRejectException;
 import ua.org.oreva.studyNN.task.Task;
 import ua.org.oreva.studyNN.task.TaskFactory;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Olga Reva
@@ -41,16 +43,16 @@ public class Client implements Runnable {
 		}
 		int i = 0;
 		try {
-			while (true) {
-				Task task = taskFactory.generateTask();
+			while (!Thread.interrupted()) {
+				Task task = taskFactory.generateTaskWithName("Task " + i + " of the Client " + name);
 				Object result = runner.run(task, task.generateRandomInput());
-				System.out.println("Client " + name + ", task#" + i + ", result: " + result);
+				//System.out.println("Client " + name + ", task" + task.getName() + ", result: " + result);
 				i++;
 				Thread.yield();
+				TimeUnit.SECONDS.sleep(5);
 			}
-		} catch (TaskRunnerRejectException e) {
-			System.out.println("Client " + name + " has rejected");
+		} catch (InterruptedException e) {
+			System.out.println("Client " + name + " stopped via interruption");
 		}
-
 	}
 }
