@@ -23,7 +23,7 @@ public class TaskRunnerImpl2 implements TaskRunner {
 	}
 
 	@Override
-	public <X, Y> X run(Task<X, Y> task, Y value) {
+	public <X, Y> X run(Task<X, Y> task, Y value) throws InterruptedException {
 		// Add new runner if possible
 		synchronized (taskQueueRunners) {
 			if (taskQueueRunners.size() < numOfRunners) {
@@ -35,7 +35,7 @@ public class TaskRunnerImpl2 implements TaskRunner {
 		}
 		// Add task to queue
 		taskQueue.put(task);
-		return null;  //TODO: don't return null!
+		return null; //Real task result we'll see after queue processing (TaskQueueRunner will write it to the screen).
 	}
 
 	@Override

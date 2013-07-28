@@ -12,7 +12,6 @@ import java.util.concurrent.TimeUnit;
  * To change this template use File | Settings | File Templates.
  */
 public class TaskQueueRunner implements Runnable {
-
 	private TaskQueue taskQueue;
 
 	public TaskQueueRunner(TaskQueue taskQueue) {
@@ -25,7 +24,7 @@ public class TaskQueueRunner implements Runnable {
 				//TODO: return result of tasks (store into a map?)
 				Task task = taskQueue.get();
 				Object taskResult = task.runWithRandomInput();
-				System.out.println("Task " + task.getName() + " run with result " + taskResult);
+				System.out.println(task.getName() + " run with result " + taskResult);
 				TimeUnit.SECONDS.sleep(3);
 			}
 		} catch (InterruptedException e) {

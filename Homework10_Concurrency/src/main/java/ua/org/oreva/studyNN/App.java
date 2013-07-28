@@ -2,7 +2,6 @@ package ua.org.oreva.studyNN;
 
 import ua.org.oreva.studyNN.client.Client;
 import ua.org.oreva.studyNN.runner.TaskRunner;
-import ua.org.oreva.studyNN.runner.TaskRunnerImpl;
 import ua.org.oreva.studyNN.runner.TaskRunnerImpl2;
 import ua.org.oreva.studyNN.task.IntToStringTaskFactory;
 import ua.org.oreva.studyNN.task.TaskFactory;
@@ -31,7 +30,7 @@ public class App
 	    for (int i = 0; i < numerOfClients; i++) {
 		    s.submit(clients[i]);
 	    }
-		TimeUnit.SECONDS.sleep(10);
+		TimeUnit.SECONDS.sleep(15);
 	    s.shutdownNow();
 	    runner.shutdownNow();
     }
