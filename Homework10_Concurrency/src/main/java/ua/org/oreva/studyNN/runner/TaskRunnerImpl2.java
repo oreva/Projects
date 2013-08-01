@@ -27,7 +27,8 @@ public class TaskRunnerImpl2 implements TaskRunner {
 		// Add new runner if possible
 		synchronized (taskQueueRunners) {
 			if (taskQueueRunners.size() < numOfRunners) {
-				TaskQueueRunner runner = new TaskQueueRunner(taskQueue);
+				String threadName = "Thread T" + String.valueOf(taskQueueRunners.size());
+				TaskQueueRunner runner = new TaskQueueRunner(taskQueue, threadName);
 				Thread t = new Thread(runner);
 				taskQueueRunners.add(t);
 				t.start();

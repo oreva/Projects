@@ -30,7 +30,7 @@ public class App
 	    for (int i = 0; i < numerOfClients; i++) {
 		    s.submit(clients[i]);
 	    }
-		TimeUnit.SECONDS.sleep(15);
+		TimeUnit.SECONDS.sleep(10);
 	    s.shutdownNow();
 	    runner.shutdownNow();
     }

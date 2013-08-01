@@ -47,7 +47,7 @@ public class Client implements Runnable {
 				runner.run(task, task.generateRandomInput());
 				i++;
 				Thread.yield();
-				TimeUnit.SECONDS.sleep(5);
+				TimeUnit.MILLISECONDS.sleep(10);
 			}
 		} catch (InterruptedException e) {
 			System.out.println("Client " + name + " stopped via interruption");

@@ -13,19 +13,20 @@ import java.util.concurrent.TimeUnit;
  */
 public class TaskQueueRunner implements Runnable {
 	private TaskQueue taskQueue;
+	private String name;
 
-	public TaskQueueRunner(TaskQueue taskQueue) {
+	public TaskQueueRunner(TaskQueue taskQueue, String name) {
 		this.taskQueue = taskQueue;
+		this.name = name;
 	}
 	@Override
 	public void run() {
 		try {
 			while (!Thread.interrupted()) {
-				//TODO: return result of tasks (store into a map?)
 				Task task = taskQueue.get();
 				Object taskResult = task.runWithRandomInput();
-				System.out.println(task.getName() + " run with result " + taskResult);
-				TimeUnit.SECONDS.sleep(3);
+				System.out.println(task.getName() + " run with result " + taskResult + " by " + name);
+				//TimeUnit.SECONDS.sleep(3);
 			}
 		} catch (InterruptedException e) {
 			System.out.println("Task Queue stopped via interruption");
