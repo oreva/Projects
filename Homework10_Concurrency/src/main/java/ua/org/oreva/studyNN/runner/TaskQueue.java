@@ -20,14 +20,14 @@ public class TaskQueue<X, Y> {
 
 	public synchronized void put(Task<X, Y> task) {
 		queue.add(task);
-		notifyAll(); //Notify all waiting threads that new task has added
+		notify(); //Notify all waiting threads that new task has added
 	}
 
 	public synchronized Task<X, Y> get() throws InterruptedException {
 		while (queue.isEmpty()) {
 			wait();
 		}
-		//notifyAll(); here we don't need to notify others
+		//notify(); here we don't need to notify others
 		return queue.pollFirst();
 	}
 }
