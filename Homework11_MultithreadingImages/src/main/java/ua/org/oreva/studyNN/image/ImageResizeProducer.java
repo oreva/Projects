@@ -16,10 +16,10 @@ import java.util.LinkedList;
  * To change this template use File | Settings | File Templates.
  */
 public class ImageResizeProducer extends Producer {
-	private BufferedImage image;
+	private ImageFile image;
 	private LinkedList<Rectangle> listOfBounds;
 
-	public ImageResizeProducer(BufferedImage image,
+	public ImageResizeProducer(ImageFile image,
 	                           LinkedList<Rectangle> listOfBounds,
 	                           TaskQueue taskQueue) {
 		super(taskQueue);

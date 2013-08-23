@@ -20,6 +20,6 @@ public class ImageResizePublisher extends Publisher {
 	@Override
 	public void publish(Task task) {
 		ImageResizeTask t = (ImageResizeTask)task;
-		System.out.println("Image " + t.getResult().getWidth() + "x" + t.getResult().getHeight() + " created.");
+		System.out.println(t.getResult());
 	}
 }

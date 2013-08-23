@@ -14,26 +14,26 @@ import java.util.List;
  * Time: 5:24 PM
  * To change this template use File | Settings | File Templates.
  */
-public class ImageResizeTask implements Task<BufferedImage, Rectangle> {
-	private BufferedImage image;
+public class ImageResizeTask implements Task<String, Rectangle> {
+	private ImageFile image;
 	private Rectangle bounds;
-	private BufferedImage result;
+	private String result;
 
-	public ImageResizeTask(BufferedImage image, Rectangle newBounds) {
+	public ImageResizeTask(ImageFile image, Rectangle newBounds) {
 		this.image = image;
 		this.bounds = newBounds;
 	}
 
-	public BufferedImage getResult() {
+	public String getResult() {
 		return result;
 	}
 
 	@Override
-	public BufferedImage run(Rectangle value) {
+	public String run(Rectangle value) {
 		if (null == value) {
 			value = bounds;
 		}
-		result = ImageMagic.resizeImage(image, value);
+		result = ImageMagic.resizeWithImageMagic(image, value);
 		return result;
 	}
 }

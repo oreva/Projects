@@ -51,7 +51,7 @@ public class ImageResizeController {
 		}
 	}
 
-	public void resize(BufferedImage image, LinkedList<Rectangle> listOfBounds) {
+	public void resize(ImageFile image, LinkedList<Rectangle> listOfBounds) {
 		ImageResizeProducer p = new ImageResizeProducer(image, listOfBounds, taskQueue);
 		Thread t = new Thread(p);
 		producerThreads.add(t);
