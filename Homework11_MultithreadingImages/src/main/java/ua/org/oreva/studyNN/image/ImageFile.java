@@ -14,7 +14,7 @@ public class ImageFile {
 	private String sourceFileName; //includes extension
 	private String resultDirectoryPath;
 
-	private String pathSeparator = "\\";
+	private String pathSeparator = "/";
 
 	public ImageFile(String sourceDir,
 	                 String sourceFileName,
@@ -25,7 +25,7 @@ public class ImageFile {
 	}
 
 	public String fixPathSeparators(String path) {
-		String result = path.replace("/", pathSeparator);
+		String result = path.replace("\\", pathSeparator);
 		return result;
 	}
 

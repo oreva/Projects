@@ -15,9 +15,9 @@ import static junit.framework.Assert.assertEquals;
  * To change this template use File | Settings | File Templates.
  */
 public class ImageFileTest {
-	private ImageFile image = new ImageFile("d:/tmp/img", "pic.gif", "d:/tmp/img");
-	private String dirPath = "d:/tmp/img";
-	private String dirPathFixed = "d:\\tmp\\img";
+	private ImageFile image = new ImageFile("d:\\tmp\\img", "pic.gif", "d:\\tmp\\img");
+	private String dirPath = "d:\\tmp\\img";
+	private String dirPathFixed = "d:/tmp/img";
 
 	@Test
 	public void testFixPathSeparators() throws Exception {
@@ -41,7 +41,7 @@ public class ImageFileTest {
 
 	@Test
 	public void testGetAbsoluteSourcePath() throws Exception {
-		String absolutePath = dirPathFixed + "\\pic.gif";
+		String absolutePath = dirPathFixed + "/pic.gif";
 		assertEquals(absolutePath, image.getAbsoluteSourcePath());
 	}
 
@@ -68,7 +68,7 @@ public class ImageFileTest {
 	public void testGetAbsoluteResultPath() throws Exception {
 		Rectangle rect = new Rectangle(0, 0, 100, 200);
 		String resultName = "pic_100x200.png";
-		String absolutePath = dirPathFixed + "\\" + resultName;
+		String absolutePath = dirPathFixed + "/" + resultName;
 		assertEquals(absolutePath, image.getAbsoluteResultPath(rect, "png"));
 	}
 }

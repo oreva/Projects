@@ -41,37 +41,37 @@ public class ImageMagic {
 	 * @return status string
 	 */
 	public static String resizeWithImageMagic(ImageFile image, Rectangle newBounds) {
-		Runtime runtime = Runtime.getRuntime();
-		StringBuilder command = new StringBuilder();
-		command.append("convert '");
-		command.append(escapePathForImageMagic(image.getAbsoluteSourcePath()));
-		command.append("' -resize ");
+		String resultPath = image.getAbsoluteResultPath(newBounds, "gif");
 		String w = String.valueOf(newBounds.width);
 		String h = String.valueOf(newBounds.height);
-		command.append(w + "x" + h);
-		command.append("\\! "); //ignore aspect ratio
-		String resultPath = escapePathForImageMagic(image.getAbsoluteResultPath(newBounds, "gif"));
-		command.append("'" + resultPath + "'");
-
-		System.out.println("ImageMagic command: " + command.toString());
-
 		String status;
 		try {
-			Process p = runtime.exec(command.toString());
+			//Process p = runtime.exec(command.toString());
+			ProcessBuilder pb = new ProcessBuilder("convert",
+					"\"" + escapePathForImageMagic(image.getAbsoluteSourcePath()) + "\"",
+					"-resize",
+					w + "x" + h,
+					"\"" + escapePathForImageMagic(resultPath) + "\"");
+			Process p = pb.start();
+
 			ProcessInputStreamReader inputReader = new ProcessInputStreamReader(p.getInputStream());
 			new Thread(inputReader).start();
 			ProcessInputStreamReader errorReader = new ProcessInputStreamReader(p.getErrorStream());
 			new Thread(errorReader).start();
 			try {
 				p.waitFor();
-				System.out.println("Debug info: ImageMagic process returned " + p.exitValue());
+				if (p.exitValue() != 0) {
+					status = "Creation of image " + resultPath + " failed. Process exit value = " + p.exitValue();
+				} else {
+					status = "Image " + resultPath + " created successfully";
+				}
 				System.out.println("InputStream result info:" + inputReader.getResultInfo());
 				System.out.println("ErrorStream result info:" + errorReader.getResultInfo());
 			} catch (InterruptedException e) {
 				status = "Creation of image " + resultPath + " failed due to the IO exception: " + e.getMessage();
 				e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
 			}
-			status = "Image " + resultPath + " created successfully";
+
 		} catch (IOException e) {
 			status = "Creation of image " + resultPath + " failed due to the IO exception: " + e.getMessage();
 		}
