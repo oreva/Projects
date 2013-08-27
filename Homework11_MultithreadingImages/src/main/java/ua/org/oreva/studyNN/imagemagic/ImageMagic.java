@@ -48,10 +48,10 @@ public class ImageMagic {
 		try {
 			//Process p = runtime.exec(command.toString());
 			ProcessBuilder pb = new ProcessBuilder("convert",
-					"\"" + escapePathForImageMagic(image.getAbsoluteSourcePath()) + "\"",
+					escapePathForImageMagic(image.getAbsoluteSourcePath()),
 					"-resize",
 					w + "x" + h,
-					"\"" + escapePathForImageMagic(resultPath) + "\"");
+					escapePathForImageMagic(resultPath));
 			Process p = pb.start();
 
 			ProcessInputStreamReader inputReader = new ProcessInputStreamReader(p.getInputStream());
