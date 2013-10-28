@@ -173,6 +173,7 @@ public class GeoDataService {
 			Connection connection = DBManager.instance().getConnection();
 			PreparedStatement statement = connection.prepareStatement(sql);
 			statement.setString(1, countryCode);
+			statement.setString(2, countryCode);
 			statement.execute();
 			connection.close();
 

@@ -6,6 +6,7 @@ CREATE TABLE country
 (
   id serial NOT NULL,
   iso_code character varying(2),
+  name character varying(100),
   CONSTRAINT country_pkey PRIMARY KEY (id)
 )
 WITH (
