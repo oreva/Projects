@@ -1,0 +1,1 @@
+Use "mvn tomcat6:deploy" or "mvn tomcat6:redeploy" to deploy/redeploy to Tomcat.
