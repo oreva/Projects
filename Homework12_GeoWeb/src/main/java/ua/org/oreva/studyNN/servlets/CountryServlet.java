@@ -2,10 +2,19 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ua.org.oreva.studyNN;
+package ua.org.oreva.studyNN.servlets;
+
+import ua.org.oreva.studyNN.db.GeoDataService;
+import ua.org.oreva.studyNN.entities.Country;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.LinkedList;
+import java.util.Map;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,8 +27,12 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "CountryServlet", urlPatterns = {"/countryServlet"})
 public class CountryServlet extends HttpServlet {
+	private static final String jspURL = "/country.jsp";
 
-    /**
+	private static final String paramCode = "code";
+	private static final String paramName = "name";
+
+	/**
      * Processes requests for both HTTP
      * <code>GET</code> and
      * <code>POST</code> methods.
@@ -31,10 +44,32 @@ public class CountryServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+	    ServletContext sc = getServletContext();
+	    RequestDispatcher rd = sc.getRequestDispatcher(jspURL);
+
+	    Map<String, String[]> paramMap = request.getParameterMap();
+	    String[] code = paramMap.get(paramCode);
+	    String[] name = paramMap.get(paramName);
+
+	    GeoDataService dataService = GeoDataService.instance();
+	    ResultSet result = dataService.searchCountries(code != null ? code[0] : null, name != null ? name[0] : null);
+	    LinkedList<Country> countries = new LinkedList<Country>();
+	    try {
+		    while (result.next()) {
+			    Country country = new Country(result.getInt(1), result.getString(2));
+			    countries.add(country);
+		    }
+	    } catch (SQLException e) {
+		    throw new RuntimeException(e);
+	    }
+
+	    request.setAttribute("countries", countries);
+
+	    rd.forward(request, response);
+
+        /*response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -46,7 +81,7 @@ public class CountryServlet extends HttpServlet {
             out.println("</html>");
         } finally {            
             out.close();
-        }
+        } */
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

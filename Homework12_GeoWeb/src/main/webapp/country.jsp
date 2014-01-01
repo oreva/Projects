@@ -8,13 +8,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 
-<sql:query dataSource="jdbc/postgres" var="countries">
-    select *
-    from country
-    where iso_code like '%<c:out value="${param.code}"/>%'
-    and name like '%<c:out value="${param.name}"/>%'
-</sql:query>
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -23,7 +16,7 @@
     </head>
     <body>
         <h1>Search countries:</h1>
-        <form action="country.jsp" method="get">
+        <form action="countryServlet" method="get">
             <div>
                 Search countries by 
                 code: <input type="search" name="code" value="${param.code}">
@@ -37,10 +30,10 @@
                 <th>ID</th> 
                 <th>ISO Code</th> 
             </tr>
-            <c:forEach var="row" items="${countries.rows}"> 
+            <c:forEach var="row" items="${countries}">
                 <tr> 
                     <td><c:out value="${row.id}"/></td> 
-                    <td><c:out value="${row.iso_code}"/></td> 
+                    <td><c:out value="${row.isoCode}"/></td>
                 </tr> 
              </c:forEach> 
         </table>

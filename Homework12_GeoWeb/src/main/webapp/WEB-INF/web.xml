@@ -9,7 +9,7 @@
     <display-name>Geo Web Application</display-name>
     <servlet>
         <servlet-name>CountryServlet</servlet-name>
-        <servlet-class>ua.org.oreva.studyNN.CountryServlet</servlet-class>
+        <servlet-class>ua.org.oreva.studyNN.servlets.CountryServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>CountryServlet</servlet-name>
