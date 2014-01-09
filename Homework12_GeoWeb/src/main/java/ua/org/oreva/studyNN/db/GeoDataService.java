@@ -6,8 +6,12 @@ import ua.org.oreva.studyNN.entities.Postcode;
 import ua.org.oreva.studyNN.entities.Region;
 import ua.org.oreva.studyNN.util.SmallContentReader;
 
+import javax.servlet.ServletContext;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,6 +27,8 @@ import java.sql.Statement;
 public class GeoDataService {
 	private static GeoDataService instance;
 
+	private ServletContext currentContext;
+
 	private GeoDataService(){}
 
 	public static GeoDataService instance() {
@@ -30,6 +36,14 @@ public class GeoDataService {
 			instance = new GeoDataService();
 		}
 		return instance;
+	}
+
+	public ServletContext getCurrentContext() {
+		return currentContext;
+	}
+
+	public void setCurrentContext(ServletContext context) {
+		currentContext = context;
 	}
 
 	public Country loadCountry(String countryCode) {
@@ -165,8 +179,8 @@ public class GeoDataService {
 
 	public void importCountry(String countryCode) {
 		try {
-			String workingDir = System.getProperty("user.dir");
-			SmallContentReader reader = new SmallContentReader(new BufferedReader(new FileReader(workingDir + "/Homework9_JDBC/src/main/sql/queries/import_country.sql")));
+			InputStream importSQL = getCurrentContext().getResourceAsStream("/WEB-INF/classes/queries/import_country.sql");
+			SmallContentReader reader = new SmallContentReader(new BufferedReader(new InputStreamReader(importSQL)));
 			String sql = reader.readAll();
 			reader.close();
 
@@ -184,8 +198,8 @@ public class GeoDataService {
 
 	protected void importRegion(String regionName, int countryId) {
 		try {
-			String workingDir = System.getProperty("user.dir");
-			SmallContentReader reader = new SmallContentReader(new BufferedReader(new FileReader(workingDir + "/Homework9_JDBC/src/main/sql/queries/import_region.sql")));
+			InputStream importSQL = getCurrentContext().getResourceAsStream("/WEB-INF/classes/queries/import_region.sql");
+			SmallContentReader reader = new SmallContentReader(new BufferedReader(new InputStreamReader(importSQL)));
 			String sql = reader.readAll();
 			reader.close();
 
@@ -203,8 +217,8 @@ public class GeoDataService {
 
 	protected void importCity(String cityName, Integer countryId, Integer regionId) {
 		try {
-			String workingDir = System.getProperty("user.dir");
-			SmallContentReader reader = new SmallContentReader(new BufferedReader(new FileReader(workingDir + "/Homework9_JDBC/src/main/sql/queries/import_city.sql")));
+			InputStream importSQL = getCurrentContext().getResourceAsStream("/WEB-INF/classes/queries/import_city.sql");
+			SmallContentReader reader = new SmallContentReader(new BufferedReader(new InputStreamReader(importSQL)));
 			String sql = reader.readAll();
 			reader.close();
 
@@ -236,8 +250,8 @@ public class GeoDataService {
 	protected void importPostcode(String postcode, Double latitude, Double longitude, Double accuracy,
 	                              Integer countryId, Integer regionId, Integer cityId) {
 		try {
-			String workingDir = System.getProperty("user.dir");
-			SmallContentReader reader = new SmallContentReader(new BufferedReader(new FileReader(workingDir + "/Homework9_JDBC/src/main/sql/queries/import_postcode.sql")));
+			InputStream importSQL = getCurrentContext().getResourceAsStream("/WEB-INF/classes/queries/import_postcode.sql");
+			SmallContentReader reader = new SmallContentReader(new BufferedReader(new InputStreamReader(importSQL)));
 			String sql = reader.readAll();
 			reader.close();
 

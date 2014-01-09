@@ -7,9 +7,11 @@ import ua.org.oreva.studyNN.exception.GeoItemFormatException;
 import ua.org.oreva.studyNN.parser.GeoFileParser;
 import ua.org.oreva.studyNN.parser.GeoItem;
 
+import javax.servlet.ServletContext;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
 
 /**
  * Created with IntelliJ IDEA.
@@ -19,9 +21,27 @@ import java.io.IOException;
  * To change this template use File | Settings | File Templates.
  */
 public class GeoDataImporter {
+	private ServletContext currentContext;
+
+	public GeoDataImporter(ServletContext currentContext) {
+		this.currentContext = currentContext;
+		GeoDataService.instance().setCurrentContext(currentContext);
+	}
+
+	public ServletContext getCurrentContext() {
+		return currentContext;
+	}
+
+	public void setCurrentContext(ServletContext context) {
+		currentContext = context;
+	}
 
 	public void importGeoData(String filePath) throws IOException {
-		GeoFileParser parser = new GeoFileParser(new BufferedReader(new FileReader(filePath)));
+		importGeoData(new FileReader(filePath));
+	}
+
+	public void importGeoData(Reader fileContent) throws IOException {
+		GeoFileParser parser = new GeoFileParser(new BufferedReader(fileContent));
 		GeoItem item;
 		try {
 			Country country = null;

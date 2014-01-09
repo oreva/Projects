@@ -83,5 +83,20 @@
           </configuration>
       </plugin>
     </plugins>
+
+  <resources>
+      <resource>
+          <directory>src/main/resources</directory>
+          <includes>
+              <include>**/*.properties</include>
+          </includes>
+      </resource>
+      <resource>
+          <directory>src/main/sql</directory>
+          <includes>
+              <include>**/*.sql</include>
+          </includes>
+      </resource>
+  </resources>
   </build>
 </project>

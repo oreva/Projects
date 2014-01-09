@@ -22,6 +22,12 @@ and open the template in the editor.
             <form action="postcode.jsp"> 
                 <input type="submit" value="postcode">
             </form>
+            <br>
+            <form method="POST" action="upload" enctype="multipart/form-data" >
+                Upload File:
+                <input type="file" name="file" id="file" />
+                <input type="submit" value="Upload" name="upload" id="upload" />
+            </form>
         </div>
     </body>
 </html>

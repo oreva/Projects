@@ -15,6 +15,14 @@
         <servlet-name>CountryServlet</servlet-name>
         <url-pattern>/countryServlet</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>UploadServlet</servlet-name>
+        <servlet-class>ua.org.oreva.studyNN.servlets.UploadServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UploadServlet</servlet-name>
+        <url-pattern>/upload</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
