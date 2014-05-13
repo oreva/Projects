@@ -84,6 +84,18 @@
           <artifactId>spring-context</artifactId>
           <version>4.0.3.RELEASE</version>
       </dependency>
+
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-core</artifactId>
+          <version>4.0.3.RELEASE</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-webmvc</artifactId>
+          <version>4.0.3.RELEASE</version>
+      </dependency>
   </dependencies>
   <build>
     <finalName>Lab13_SpringHibernate</finalName>
