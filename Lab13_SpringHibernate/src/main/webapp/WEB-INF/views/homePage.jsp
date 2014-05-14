@@ -14,5 +14,8 @@
 </head>
 <body>
     Home page body
+    <form action="message">
+        <input type="submit" value="Messages"/>
+    </form>
 </body>
 </html>

@@ -10,6 +10,6 @@
                        value="/WEB-INF/views/tiles/signinsignup.jsp" />
     </definition>
     <definition name="home" extends="template">
-        <put-attribute name="content" value="/WEB-INF/views/home.jsp" />
+        <put-attribute name="content" value="/WEB-INF/views/homePage.jsp" />
     </definition>
 </tiles-definitions>

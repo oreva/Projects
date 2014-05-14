@@ -4,14 +4,7 @@
 
 <web-app>
     <display-name>Test Spring and Hibernate Application</display-name>
-    <!--<servlet>
-        <servlet-name>CountryServlet</servlet-name>
-        <servlet-class>ua.org.oreva.studyNN.servlets.CountryServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>CountryServlet</servlet-name>
-        <url-pattern>/countryServlet</url-pattern>
-    </servlet-mapping>   -->
+
     <servlet>
         <servlet-name>test</servlet-name>
         <servlet-class>
@@ -23,6 +16,17 @@
         <servlet-name>test</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+
+    <!--<context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/applicationContext.xml.bak</param-value>
+    </context-param>
+
+    <listener>
+        <listener-class>
+            org.springframework.web.context.ContextLoaderListener
+        </listener-class>
+    </listener>  -->
 
     <session-config>
         <session-timeout>
