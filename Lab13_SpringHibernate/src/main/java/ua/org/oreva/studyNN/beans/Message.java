@@ -2,6 +2,11 @@ package ua.org.oreva.studyNN.beans;
 
 import org.springframework.stereotype.Component;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Olga Reva
@@ -10,11 +15,25 @@ import org.springframework.stereotype.Component;
  * To change this template use File | Settings | File Templates.
  */
 @Component
+@Entity
+@Table(name = "message")
 public class Message {
+	private int id;
 	private String phone;
 	private String email;
 	private String message;
 
+	@Id
+	@Column(name = "id")
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	@Column(name = "phone")
 	public String getPhone() {
 		return phone;
 	}
@@ -23,6 +42,7 @@ public class Message {
 		this.phone = phone;
 	}
 
+	@Column(name = "email")
 	public String getEmail() {
 		return email;
 	}
@@ -31,6 +51,7 @@ public class Message {
 		this.email = email;
 	}
 
+	@Column(name = "message")
 	public String getMessage() {
 		return message;
 	}

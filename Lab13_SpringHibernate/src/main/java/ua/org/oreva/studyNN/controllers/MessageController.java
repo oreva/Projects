@@ -1,11 +1,19 @@
 package ua.org.oreva.studyNN.controllers;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.tutorial.util.HibernateUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ua.org.oreva.studyNN.beans.Message;
+import ua.org.oreva.studyNN.dao.MessageDAO;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.Map;
 
@@ -19,6 +27,16 @@ import java.util.Map;
 @Controller
 @RequestMapping("/message")
 public class MessageController {
+	@Autowired
+	private MessageDAO dao;
+
+	private SessionFactory sessionFactory;
+
+	@Autowired
+	public void setSessionFactory(SessionFactory s) {
+		this.sessionFactory = s;
+	}
+
 	@RequestMapping(method = RequestMethod.GET)
 	public String showMessagePage(Model model) {
 		model.addAttribute(new LinkedList<Message>());
@@ -34,6 +52,25 @@ public class MessageController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public String storeMessage(Model model) {
-		return "submitResultPage";
+		Transaction tx = null;
+		try {
+			Session session = sessionFactory.getCurrentSession();
+			tx = session.beginTransaction();
+
+			Message m = new Message();
+			m.setMessage("test " + new Date().getTime());
+			dao.setSession(session);
+			dao.createItem(m);
+
+			tx.commit();
+
+			return "submitResultPage";
+
+		} catch (RuntimeException e) {
+			if (tx != null) {
+				tx.rollback();
+			}
+			throw e;
+		}
 	}
 }
