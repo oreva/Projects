@@ -29,13 +29,8 @@ import java.util.Map;
 public class MessageController {
 	@Autowired
 	private MessageDAO dao;
-
-	private SessionFactory sessionFactory;
-
 	@Autowired
-	public void setSessionFactory(SessionFactory s) {
-		this.sessionFactory = s;
-	}
+	private SessionFactory sessionFactory;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String showMessagePage(Model model) {

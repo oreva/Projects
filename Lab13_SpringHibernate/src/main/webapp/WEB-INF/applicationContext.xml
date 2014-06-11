@@ -17,13 +17,9 @@
         <property name="password" value="spring"/>
     </bean>
 
-    <bean id="mySessionFactory" class="org.springframework.orm.hibernate4.annotation.AnnotationSessionFactoryBean">
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.annotation.AnnotationSessionFactoryBean">
         <property name="dataSource" ref="myDataSource"/>
-        <!--<property name="mappingResources">
-            <list>
-                <value>product.hbm.xml</value>
-            </list>
-        </property> -->
+        <property name="packagesToScan" value="ua.org.oreva.studyNN"/>
         <property name="hibernateProperties">
             <value>
                 hibernate.dialect=org.hibernate.dialect.PostgreSQL82Dialect
