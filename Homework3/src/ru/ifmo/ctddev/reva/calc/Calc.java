@@ -19,6 +19,7 @@ public class Calc {
 			calculate(f, 0, 10);
 		} catch (IncorrectFuncBodyException e) {
 			e.printStackTrace();
+
 		}
 	}
 
